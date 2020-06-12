@@ -159,7 +159,7 @@ class stat_model:
         plt.xlabel('days after first case')
         plt.ylabel('thousands of people')
         plt.grid()
-
+        plt.savefig("crd-curve.png")
         plt.show()
 
         
