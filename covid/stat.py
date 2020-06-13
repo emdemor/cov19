@@ -7,26 +7,35 @@ Created on Fri Jun 12 02:35:02 2020
 """
 
 
+import random,pygtc
 import numpy as np
 import pandas as pd
-import random
-from tqdm import tqdm,tqdm_notebook
-from .functions import distribute_among_walkers, riffle
-from scipy import stats
 import matplotlib.pyplot as plt
+
+from tqdm import tqdm
+from .functions import distribute_among_walkers, riffle,notebook_directory,set_directory
+from scipy import stats
+from covid import root_directory,tables_directory
 
 
 
 class stat_model:
     
-    def __init__(self,dataframe,ep_model,par_est,
-                 par_min=False,par_max=False,
-                 par_labels = False,rescale=1,tend=False):
+    def __init__(self,
+                 dataframe,
+                 ep_model,
+                 par_est,
+                 par_min=False,
+                 par_max=False,
+                 par_labels = False,
+                 rescaling_by=1,
+                 tend=False
+                 ):
         
         self.dataframe = dataframe
         self.ep_model = ep_model
         self.par_est = par_est
-        self.rescale = rescale
+        self.rescale = rescaling_by
         
         if tend == False:
             self.tend = dataframe.days_list[-1]
@@ -40,6 +49,7 @@ class stat_model:
             
         self.mcmc_sample = False
         self.sample_imported = False
+        self.ndim = len(par_est)
         
         
     def solve(self,parameters):
@@ -78,10 +88,19 @@ class stat_model:
         return lnP
 
 
-    def metropolis_hastings(self,n_points,par_stp,file_name="mcmc.csv",overwrite=False,n_walkers=1):
+    def metropolis_hastings(self,
+                            n_points,
+                            par_stp,
+                            file_name="mcmc.csv",
+                            overwrite=False,
+                            n_walkers=1
+                            ):
         
         # distributing the points to walkers
         n_walkers_list = distribute_among_walkers(n_points,n_walkers)
+        
+        # changing to tables directory
+        set_directory(tables_directory)
         
         # cleaning the old file
         if overwrite:
@@ -123,19 +142,31 @@ class stat_model:
                 file.write(''.join(riffle(list(map(str,PAR)),'\t'))+'\n')
 
         file.close()
-            
+        
+        # returning to root directory
+        set_directory(tables_directory)
+        
+        # updating mcmc_sample variable
         self.mcmc_sample = True
         
     def import_sample(self,file_name="mcmc.csv"):
         
+        # setting tables directory
+        set_directory(tables_directory)
+        
         #importing
-        raw_sample_df = pd.read_csv(file_name,sep="\t")
+        self.raw_sample_df = pd.read_csv(file_name,sep="\t")
+        self.raw_sample = self.raw_sample_df.to_numpy()
         
         # removing outliers
-        self.sample_df = raw_sample_df[(np.abs(stats.zscore(raw_sample_df)) < 3.1).all(axis=1)]
+        self.sample_df = self.raw_sample_df[(np.abs(stats.zscore(self.raw_sample_df)) < 3.1).all(axis=1)]
         self.sample = self.sample_df.to_numpy()
         
+        # updating sample_imported
         self.sample_imported = True
+        
+        # returning to root directory
+        set_directory(root_directory)
         
         return self.sample_df.info()
     
@@ -159,7 +190,47 @@ class stat_model:
         plt.xlabel('days after first case')
         plt.ylabel('thousands of people')
         plt.grid()
+        set_directory(tables_directory)
         plt.savefig("crd-curve.png")
+        set_directory(root_directory)
         plt.show()
-
+        
+    def single_parameter_estimates(self,alpha=0.3173):
+        if not self.sample_imported:
+            print('Error: you must read a mcmc sample file first.')
+            return []
+        else:
+            var = 100*alpha/2
+            interval = np.array(list(map(lambda index: np.percentile(self.raw_sample[:, index], [var, 50,100-var]),list(range(self.ndim)))))
+            return interval
+            
+        
+    def gtc_plot(self,
+                 truths=None,
+                 n_contour_levels=2, 
+                 figure_size = 8, 
+                 custom_label_font = {'family':'DejaVu Sans', 'size':10}, 
+                 custom_tick_font = {'family':'DejaVu Sans', 'size':8},
+                 save_figure = False,
+                 file_name = 'figGTC.png'
+            ):
+        
+        GTC = pygtc.plotGTC(chains=[self.sample ],
+                    truths = truths,
+                    paramNames = self.par_labels,
+                    nContourLevels = n_contour_levels,
+                    figureSize = figure_size,
+                    customLabelFont = custom_label_font,
+                    customTickFont = custom_tick_font 
+                   )
+        
+        if save_figure:
+            set_directory(tables_directory)
+            GTC.savefig('GTC.pdf')
+            set_directory(root_directory)
+        
+        return GTC
+            
+            
+          
         
