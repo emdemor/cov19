@@ -1,1 +1,1 @@
-![image](./crd-curve.png)
+![image](./tables/crd-curve.png)
