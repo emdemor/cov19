@@ -55,11 +55,20 @@ class stat_model:
     def solve(self,parameters):
         return self.ep_model(par = parameters, x0 = [10**(parameters[-1]),self.rescale,0,0],tend=self.tend)
        
-    def chi_sqrd(self,par):
+    def chi_sqrd(self,
+                 par,
+                 fit_recovered = True,
+                 fit_death = True,
+                 fit_comfirmed = True
+                 ):
 
         '''
         Importante notar que (par_est,) é uma tupla de apenas um elemento.
         Caso pusessemos (par_est), os parenteses não indicariam uma tupla
+        
+        Aqui existe um problemanNos casos em que o valor temporal dos dados
+        é maior do que o valor tend fornecido pelo usuário. É preciso realizar 
+        o tratamento de erros
         '''
         model = self.solve(par)
       
@@ -74,16 +83,35 @@ class stat_model:
         d_data = self.dataframe.death_list
 
         chi2 = lambda model, data: (model-data)**2
+        
+        Chi2 = 0;
+        
+        if fit_comfirmed:
+            Chi2 += sum(list(map(chi2, list(np.interp(t_data, t_model, c_model)), c_data)))
+            
+        if fit_recovered:
+            Chi2 += sum(list(map(chi2, list(np.interp(t_data, t_model, r_model)), r_data)))
+            
+        if fit_death:
+            Chi2 += sum(list(map(chi2, list(np.interp(t_data, t_model, d_model)), d_data)))
 
-        Chi2_c = sum(list(map(chi2, list(np.interp(t_data, t_model, c_model)), c_data)))
-        Chi2_r = sum(list(map(chi2, list(np.interp(t_data, t_model, r_model)), r_data)))
-        Chi2_d = sum(list(map(chi2, list(np.interp(t_data, t_model, d_model)), d_data)))
 
-        return Chi2_c+Chi2_r+Chi2_d
+
+        return Chi2
 
     
-    def log_prob(self,par):
-        lnP = - 0.5 * self.chi_sqrd(par)
+    def log_prob(self,
+                 par,
+                 fit_recovered = True,
+                 fit_death = True,
+                 fit_comfirmed = True
+                 ):
+        
+        lnP = - 0.5 * self.chi_sqrd(par,
+                                    fit_recovered = fit_recovered,
+                                    fit_death = fit_death,
+                                    fit_comfirmed = fit_comfirmed
+                                    )
 
         return lnP
 
@@ -91,9 +119,12 @@ class stat_model:
     def metropolis_hastings(self,
                             n_points,
                             par_stp,
-                            file_name="mcmc.csv",
-                            overwrite=False,
-                            n_walkers=1
+                            file_name = "mcmc.csv",
+                            overwrite = False,
+                            n_walkers = 1,
+                            fit_recovered = True,
+                            fit_death = True,
+                            fit_comfirmed = True
                             ):
         
         # distributing the points to walkers
@@ -119,14 +150,20 @@ class stat_model:
 
             # evaluating the log-probability of the guess
             PAR = self.par_est
-            log_PROB = self.log_prob(PAR)
+            log_PROB = self.log_prob(PAR,
+                                    fit_recovered = fit_recovered,
+                                    fit_death = fit_death,
+                                    fit_comfirmed = fit_comfirmed)
 
             # looping through the walker amount of points
             for n in tqdm(range(n_walkers_list[ind_walker]),desc='walker '+str(1+ind_walker)+': '):
 
                 # suggest new candidate from uniform distribution
                 PAR_NEW  = list(map(lambda p,h: p + random.uniform(-1, 1)*h ,np.array(PAR),np.array(par_stp)))
-                log_PROB_NEW = self.log_prob(PAR_NEW)
+                log_PROB_NEW = self.log_prob(PAR_NEW,
+                                    fit_recovered = fit_recovered,
+                                    fit_death = fit_death,
+                                    fit_comfirmed = fit_comfirmed)
 
                 # accept new candidate in Monte-Carlo fashing.
                 if (log_PROB_NEW > log_PROB):
