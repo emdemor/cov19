@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Introduction
 
 Many research teams seek to find an epidemiological model that can describe the spread of SARS-CoV-2. Many gaps in knowledge about the biology of the virus, the difference in social patterns and public policies by countries around the world combined with the many testing approaches causes that the breadth and shape of infection curves do not assume a global behavioral pattern.
@@ -11,4 +12,5 @@ $$\frac{dR}{dt}	=\rho\,i\left(t\right)^{\alpha};$$ and
 $$\frac{dD}{dt}	=\delta\,i\left(t\right)^{\alpha}.$$ 
 Notice that:$$\frac{dS}{dt}+\frac{dI}{dt}+\frac{dR}{dt}+\frac{dD}{dt}=0.$$This equations must be integrated with inicial conditions given by: $S\left(0\right)=s_{0}$ , $I\left(0\right)=1$ and $R\left(0\right)=D\left(0\right)=0$. The time variable $t$ is defined as the time after first confirmed case. The model have five free parameters $\left(\alpha,\beta,\rho,\delta,s_{0}\right)$, where $s_{0}$ is the initial susceptible individuals. Inthe case where $\alpha=1$, the SIRD model is recovered. As $s_{0}$, in general, assumes very large values, lets consider its log value. In this way, the parameters are $\left(\alpha,\beta,\rho,\delta,\log_{10}s_{0}\right)$
 
-![image](./crd-curve.png)
+
+![image](./tables/crd-curve.png)
