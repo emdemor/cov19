@@ -17,39 +17,24 @@ This equations must be integrated with inicial conditions given by: s(0)=s_0 , I
 --------|--------|--------|--------|--------|--------
 
 ### Table of Contents
-1. [Prerequisites](#1-prerequisites)
-2. [Installation](#2-installation)
+1. [Results](#1-results)
+2. [Dataset](#2-dataset)
 3. [Troubleshooting](#3-troubleshooting)
 4. [More Documentation](#4-more-documentation)
 5. [How to Contribute](#5-how-to-contribute)
 6. [License](#6-license)
 
-# 1.Introduction
 
-
-
-# Results
+## 1. Results
 
 The main result in this version is to plot de curves from the model for a specific parameter vector and compare this with dataset. In covid/stat.py, functions has been implemented to generate an MCMC sample, through which it will be possible to make inferences of the parametric intervals.
 
 ![image](./tables/crd-curve.png)
 
-# Dataset
+### 2. Dataset
 
 Here, we are using the Microsoft Data, from the repo https://github.com/microsoft/Bing-COVID-19-Data. 
 
-
-
-## 1. Prerequisites
-Before installing rAthena there are certain tools and applications you will need which
-differs between the varying operating systems available.
-
-### Hardware
-Hardware Type | Minimum | Recommended
-------|------|------
-CPU | 1 Core | 2 Cores
-RAM | 1 GB | 2 GB
-Disk Space | 300 MB | 500 MB
 
 ### Operating System & Preferred Compiler
 Operating System | Compiler
@@ -68,13 +53,6 @@ Application | Name
 ------|------
 Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench/)
 
-## 2. Installation 
-
-### Full Installation Instructions
-  * [Windows](https://github.com/rathena/rathena/wiki/Install-on-Windows)
-  * [CentOS](https://github.com/rathena/rathena/wiki/Install-on-Centos)
-  * [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
-  * [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
 
 ## 3. Troubleshooting
 
