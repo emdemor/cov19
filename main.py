@@ -11,6 +11,7 @@ from covid import read_dataset,country,mod_sird
 from covid.stat import stat_model
 import numpy as np
 import pygtc
+import matplotlib.pyplot as plt
 
 # Raw Estimated Parameters
 scl_factor = 1000;
@@ -33,13 +34,15 @@ brasil_df.dataset(df,rescaling_by=1/scl_factor)
 
 # defining statistical model
 StatModel = stat_model(brasil_df,mod_sird,par_guess,rescaling_by = 1/scl_factor,par_labels=par_labels)
-#StatModel.data_model_plot(par_est)
+StatModel.data_model_plot(par_guess)
 
 # generating a mcmc sample by metropolis-hastings algorithm
-StatModel.metropolis_hastings(1000,par_stp,overwrite=False,file_name='mcmc_sample_5par.csv')
+#StatModel.metropolis_hastings(1000,par_stp,overwrite=False,file_name='mcmc_sample_5par.csv')
 StatModel.import_sample(file_name='mcmc_sample_5par.csv')
 SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173)
-#GTCPlot = StatModel.gtc_plot()
+GTCPlot = StatModel.gtc_plot()
+
+plt.show()
 
 StatModel.data_model_plot(SingleParameterEstimates[:,1])
 
