@@ -59,7 +59,7 @@ class stat_model:
                  par,
                  fit_recovered = True,
                  fit_death = True,
-                 fit_comfirmed = True
+                 fit_confirmed = True
                  ):
 
         '''
@@ -86,7 +86,7 @@ class stat_model:
         
         Chi2 = 0;
         
-        if fit_comfirmed:
+        if fit_confirmed:
             Chi2 += sum(list(map(chi2, list(np.interp(t_data, t_model, c_model)), c_data)))
             
         if fit_recovered:
@@ -104,13 +104,13 @@ class stat_model:
                  par,
                  fit_recovered = True,
                  fit_death = True,
-                 fit_comfirmed = True
+                 fit_confirmed = True
                  ):
         
         lnP = - 0.5 * self.chi_sqrd(par,
                                     fit_recovered = fit_recovered,
                                     fit_death = fit_death,
-                                    fit_comfirmed = fit_comfirmed
+                                    fit_confirmed = fit_confirmed
                                     )
 
         return lnP
@@ -124,7 +124,7 @@ class stat_model:
                             n_walkers = 1,
                             fit_recovered = True,
                             fit_death = True,
-                            fit_comfirmed = True
+                            fit_confirmed = True
                             ):
         
         # distributing the points to walkers
@@ -153,7 +153,7 @@ class stat_model:
             log_PROB = self.log_prob(PAR,
                                     fit_recovered = fit_recovered,
                                     fit_death = fit_death,
-                                    fit_comfirmed = fit_comfirmed)
+                                    fit_confirmed = fit_confirmed)
 
             # looping through the walker amount of points
             for n in tqdm(range(n_walkers_list[ind_walker]),desc='walker '+str(1+ind_walker)+': '):
@@ -163,7 +163,7 @@ class stat_model:
                 log_PROB_NEW = self.log_prob(PAR_NEW,
                                     fit_recovered = fit_recovered,
                                     fit_death = fit_death,
-                                    fit_comfirmed = fit_comfirmed)
+                                    fit_confirmed = fit_confirmed)
 
                 # accept new candidate in Monte-Carlo fashing.
                 if (log_PROB_NEW > log_PROB):
