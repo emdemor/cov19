@@ -263,7 +263,7 @@ class stat_model:
         
         if save_figure:
             set_directory(tables_directory)
-            GTC.savefig('GTC.pdf')
+            GTC.savefig('GTC.png')
             set_directory(root_directory)
         
         return GTC
