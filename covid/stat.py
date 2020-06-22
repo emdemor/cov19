@@ -1,25 +1,79 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jun 12 02:35:02 2020
 
-@author: eduardo
+Description
+----------
+This module gives functions and classes to manipulate the global statistical
+properties of the model
+
+Informations
+----------
+    Author: Eduardo M.  de Morais
+    Maintainer:
+    Email: emdemor415@gmail.com
+    Copyright:
+    Credits:
+    License:
+    Version:
+    Status: in development
+    
 """
-
 
 import random,pygtc
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
 from tqdm import tqdm
 from .functions import distribute_among_walkers, riffle,notebook_directory,set_directory
 from scipy import stats
 from covid import root_directory,tables_directory
 
-
-
 class stat_model:
+    '''
+    Description
+    ----------
+    The stat_model manipulates the global statistical parameters of the model
+    
+    Arguments
+    ----------
+    dataframe: country.dataframe
+        A pandas dataframe with covid cases in the specific country
+    
+    ep_model:
+        Details about the epidemiological model. Models mus bet implemented
+        in the models.py module.
+    
+    par_labels: list (optional)
+        A list of strings labeling the model parameters. If the user choose
+        not to pass this, the code must treat it as ['p1',...,'pn'].
+        
+    par_est: numpy.array
+        Raw estimates to the model parameter's values
+        
+    par_min: numpy.array (optional)
+        Raw estimates to the model parameter's values
+    
+    par_max: numpy.array (optional)
+        Raw estimates to the model parameter's values
+    
+    rescaling: float (optional)
+        factor to reescaling the number of cases
+    
+    tend: float (optional)
+        The maximum value of time. If the user choose not pass it, the code 
+        will get the last time from the dataset
+        
+    Parameters
+    ----------
+        
+    self.dataframe: pandas.DataFrame
+        Internal DataFrame object with data about covid cases.
+    
+    self.ep_model:
+        Internal variable with the epidemiological model.
+        
+    '''
     
     def __init__(self,
                  dataframe,
@@ -51,54 +105,107 @@ class stat_model:
         self.sample_imported = False
         self.ndim = len(par_est)
         
+       
+        
         
     def solve(self,parameters):
+        
+        """
+        Call the solve method from epidemiological model object e returns it
+        updated.
+
+        Arguments
+        ----------
+        par: numpy.array
+            Specific values for parameters
+            
+        x0: numpy.array
+            Initial conditions for variables to be integrated
+            
+        tend: float
+            Last value of time
+            
+        Parameters
+        ----------
+        void
+        
+        Returns
+        -------
+        ep_model
+        
+        """
         return self.ep_model(par = parameters, x0 = [10**(parameters[-1]),self.rescale,0,0],tend=self.tend)
-       
+
+
+
+
     def chi_sqrd(self,
                  par,
                  fit_recovered = True,
                  fit_death = True,
                  fit_confirmed = True
                  ):
-
-        '''
-        Importante notar que (par_est,) é uma tupla de apenas um elemento.
-        Caso pusessemos (par_est), os parenteses não indicariam uma tupla
         
-        Aqui existe um problemanNos casos em que o valor temporal dos dados
-        é maior do que o valor tend fornecido pelo usuário. É preciso realizar 
-        o tratamento de erros
-        '''
+        """
+        Evaluate the chi squared for a parametrical configuration
+
+        Arguments
+        ----------
+        par: numpy.array
+            Specific values for parameters
+            
+        fit_confirmed: boolean
+            Controls of the chi squared will consider the confirmed cases
+            
+        fit_recovered : boolean
+            Controls of the chi squared will consider the recovered cases
+            
+        fit_death: boolean
+            Controls of the chi squared will consider the deaths cases
+          
+        
+        Returns
+        -------
+        Chi2: float
+            Value of chi squared
+        
+        """
+        
+        # model        
         model = self.solve(par)
-      
         t_model = model.days_list      
         c_model = model.confirmed_list
         r_model = model.recovered_list
         d_model = model.death_list
         
+        #dataset
         t_data = self.dataframe.days_list    
         c_data = self.dataframe.confirmed_list
         r_data = self.dataframe.recovered_list
         d_data = self.dataframe.death_list
 
+        # chi2 function
         chi2 = lambda model, data: (model-data)**2
         
+        # stating chi2 
         Chi2 = 0;
         
+        # summing confirmed part
         if fit_confirmed:
             Chi2 += sum(list(map(chi2, list(np.interp(t_data, t_model, c_model)), c_data)))
             
+        # summing recovered part
         if fit_recovered:
             Chi2 += sum(list(map(chi2, list(np.interp(t_data, t_model, r_model)), r_data)))
             
+        # summing death part
         if fit_death:
             Chi2 += sum(list(map(chi2, list(np.interp(t_data, t_model, d_model)), d_data)))
 
-
-
         return Chi2
 
+   
+    
     
     def log_prob(self,
                  par,
@@ -106,6 +213,30 @@ class stat_model:
                  fit_death = True,
                  fit_confirmed = True
                  ):
+        """
+        Evaluate the log o probability
+        
+        Arguments
+        ----------
+        par: numpy.array
+            Specific values for parameters
+            
+        fit_confirmed: boolean
+            Controls of the chi squared will consider the confirmed cases
+            
+        fit_recovered : boolean
+            Controls of the chi squared will consider the recovered cases
+            
+        fit_death: boolean
+            Controls of the chi squared will consider the deaths cases
+          
+        
+        Returns
+        -------
+        ln: float
+            Value of log P
+        
+        """
         
         lnP = - 0.5 * self.chi_sqrd(par,
                                     fit_recovered = fit_recovered,
@@ -114,6 +245,8 @@ class stat_model:
                                     )
 
         return lnP
+
+
 
 
     def metropolis_hastings(self,
@@ -126,6 +259,43 @@ class stat_model:
                             fit_death = True,
                             fit_confirmed = True
                             ):
+        """
+        Generate a MCMC sample through metropolis hasting algorithm and
+        save it in a specified file
+        
+        Arguments
+        ----------
+        n_points: int
+            Sample length
+            
+        par_stp: numpy.array
+            The maximum displacement a walker can take at each step
+        
+        file_name: str
+            A string containing the name of the file where the code will
+            append values.
+            
+        overwrite: bool
+            Variable passed by user controling if old files will be appended 
+            or overwritten
+            
+        n_walkers: int
+            Number of random walkers
+            
+        fit_confirmed: boolean
+            Controls of the chi squared will consider the confirmed cases
+            
+        fit_recovered : boolean
+            Controls of the chi squared will consider the recovered cases
+            
+        fit_death: boolean
+            Controls of the chi squared will consider the deaths cases
+        
+        Returns
+        -------
+        void
+        
+        """
         
         # distributing the points to walkers
         n_walkers_list = distribute_among_walkers(n_points,n_walkers)
@@ -185,8 +355,26 @@ class stat_model:
         
         # updating mcmc_sample variable
         self.mcmc_sample = True
-        
+
+
+
+
     def import_sample(self,file_name="mcmc.csv"):
+        
+        """
+        This method imports the file where the sample was saved
+        
+        Arguments
+        ----------
+        file_name: str
+            A string containing the name of the file where the code will
+            append values.
+            
+        Returns
+        -------
+        :pandas.DataFrame.info()
+            Information about the sample imported
+        """
         
         # setting tables directory
         set_directory(tables_directory)
@@ -205,9 +393,28 @@ class stat_model:
         # returning to root directory
         set_directory(root_directory)
         
-        return self.sample_df.info()
+        #return self.sample_df.info()
+    
+    
+    
     
     def data_model_plot(self,par):
+        
+        """
+        This method plots a graphics comparing the dataset with the curves
+        related to the model evaluated with the parameters passed by user
+        
+        Arguments
+        ----------
+        par: numpy.array
+            Array containig a specific parametric configuration
+            
+        Returns
+        -------
+        void
+        
+        """
+        
         model = self.solve(par)
 
         # Confirmed Cases Plot
@@ -231,17 +438,39 @@ class stat_model:
         plt.savefig("crd-curve.png")
         set_directory(root_directory)
         plt.show()
-        
+ 
+
+
+       
     def single_parameter_estimates(self,alpha=0.3173):
+        
+        """
+        Returns the interval with confidence alpha.
+        
+        Arguments
+        ----------
+        alpha: float
+            Confidence level of interval estimate
+            
+        Returns
+        -------
+        void
+        
+        """
+        
+        # check if user imported a sample
         if not self.sample_imported:
             print('Error: you must read a mcmc sample file first.')
             return []
+        
         else:
             var = 100*alpha/2
             interval = np.array(list(map(lambda index: np.percentile(self.raw_sample[:, index], [var, 50,100-var]),list(range(self.ndim)))))
             return interval
             
-        
+   
+
+     
     def gtc_plot(self,
                  truths=None,
                  n_contour_levels=2, 
@@ -251,6 +480,22 @@ class stat_model:
                  save_figure = False,
                  file_name = 'figGTC.png'
             ):
+        
+        """
+        This method plots graphics for each 2-dimensional marginal
+        probability density and the 1-dimensional marginal probability
+        related to the parameters
+        
+        Arguments
+        ----------
+        void
+            
+        Returns
+        -------
+        GTC: pygtc.plotGTC
+            Variable containing the gtc plot
+        
+        """
         
         GTC = pygtc.plotGTC(chains=[self.sample ],
                     truths = truths,
@@ -262,9 +507,7 @@ class stat_model:
                    )
         
         if save_figure:
-            set_directory(tables_directory)
-            GTC.savefig('GTC.png')
-            set_directory(root_directory)
+            GTC.savefig('results/GTC.png')
         
         return GTC
             
