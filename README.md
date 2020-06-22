@@ -25,6 +25,11 @@ This equations must be integrated with inicial conditions given by: s(0)=s_0 , I
 The main result in this version is to plot de curves from the model for a specific parameter vector and compare this with dataset. In covid/stat.py, functions has been implemented to generate an MCMC sample, through which it will be possible to make inferences of the parametric intervals.
 
 ![image](./results/cases_projection.png)
+
+<p align="center">
+  <img src="./results/cases_projection.png"/>
+</p>
+
 ![image](./results/GTC.png)
 
 ### 2. Dataset
