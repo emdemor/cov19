@@ -10,7 +10,7 @@
 > In this work, a toy model is presented to describe Covid infection data in Brazil during the months of February 2020 until the first week of June 2020. This is based on a SIRD model, with the addition of a parameter for enable its compatibility with the data. This model describes the interaction of four time functions S(t), I(t), R(t) and D(t) that counts the susceptible, active infected, recovered and dead individuals in a specific population. The differential equations are:
 
 <p align="center">
-  <img src="https://latex.codecogs.com/svg.latex?%5CLARGE%20%5Cbegin%7Bcases%7D%20%5Cfrac%7BdS%7D%7Bdt%7D%20%26%20%3D-%5Cfrac%7B%5Cbeta%7D%7Bs_%7B0%7D%7DS%5Cleft%28t%5Cright%29I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%5C%5C%20%5Cfrac%7BdI%7D%7Bdt%7D%20%26%20%3D%5Cleft%28%5Cfrac%7B%5Cbeta%7D%7Bs_%7B0%7D%7DS%5Cleft%28t%5Cright%29-%5Crho-%5Cdelta%5Cright%29I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%5C%5C%20%5Cfrac%7BdR%7D%7Bdt%7D%20%26%20%3D%5Crho%20I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%5C%5C%20%5Cfrac%7BdD%7D%7Bdt%7D%20%26%20%3D%5Cdelta%20I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%20%5Cend%7Bcases%7D"/>
+  <img src="https://latex.codecogs.com/svg.latex?%5Cbegin%7Bcases%7D%20%5Cfrac%7BdS%7D%7Bdt%7D%20%26%20%3D-%5Cfrac%7B%5Cbeta%7D%7Bs_%7B0%7D%7DS%5Cleft%28t%5Cright%29I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%5C%5C%20%5Cfrac%7BdI%7D%7Bdt%7D%20%26%20%3D%5Cleft%28%5Cfrac%7B%5Cbeta%7D%7Bs_%7B0%7D%7DS%5Cleft%28t%5Cright%29-%5Crho-%5Cdelta%5Cright%29I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%5C%5C%20%5Cfrac%7BdR%7D%7Bdt%7D%20%26%20%3D%5Crho%20I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%5C%5C%20%5Cfrac%7BdD%7D%7Bdt%7D%20%26%20%3D%5Cdelta%20I%5Cleft%28t%5Cright%29%5E%7B%5Calpha%7D%20%5Cend%7Bcases%7D"/>
 </p>
 
 
