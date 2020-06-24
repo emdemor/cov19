@@ -67,7 +67,7 @@ def main(file_name):
 
 
 	# defining statistical model
-	print('[info]: Defining statistical model.\n')
+	print('[info]: Defining statistical model.')
 	StatModel = stat_model(brasil_df,
 	                       mod_sird,
 	                       par_est,
@@ -79,7 +79,7 @@ def main(file_name):
 
 	# generating a mcmc sample by metropolis-hastings algorithm
 	if generate_mcmc:
-		print('[info]: Generating a mcmc sample by metropolis-hastings algorithm.\n')
+		print('[info]: Generating a mcmc sample by metropolis-hastings algorithm.')
 		StatModel.metropolis_hastings(n_points  = sample_length,
 		                              par_stp   = par_stp,
 		                              overwrite = overwrite_file,
@@ -87,7 +87,7 @@ def main(file_name):
 		                              )
 	
 	'''
-	print('[info]: Reading mcmc sample.\n')	
+	print('[info]: Reading mcmc sample.')	
 	StatModel.import_sample(file_name = mcmc_file_name)
 	SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173)
 	GTCPlot = StatModel.gtc_plot()
@@ -96,7 +96,7 @@ def main(file_name):
 
 
 
-	print('[info]: Generating a confidence region for the curves.\n')
+	print('[info]: Generating a confidence region for the curves.')
 	TEND = 365;
 	ALPHA = 0.02;
 	    
@@ -169,7 +169,7 @@ def main(file_name):
 	plt.savefig('results/cases_projection.png')
 	#plt.savefig('results/cases_projection.pdf')
 	#plt.show()
-	print('\n\n')
+	print('\n')
 	'''
 
 
