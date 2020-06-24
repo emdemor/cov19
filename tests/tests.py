@@ -178,7 +178,7 @@ if __name__ == "__main__":
 	args = sys.argv;
 
 	if (len(sys.argv) != 2):
-		print('[error]: You must pass a parameter file to '+str(args[0]))
+		print('[Error]: You must pass a parameter file to '+str(args[0]))
 	else:
 		main(args[1])
 	print('[status]: Finished.')

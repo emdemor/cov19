@@ -90,6 +90,7 @@ class stat_model:
         self.ep_model = ep_model
         self.par_est = par_est
         self.rescale = rescaling_by
+        self.n = 0
         
         if tend == False:
             self.tend = dataframe.days_list[-1]
@@ -375,14 +376,14 @@ class stat_model:
         :pandas.DataFrame.info()
             Information about the sample imported
         """
-        
+
         # setting tables directory
         set_directory(tables_directory)
         
         #importing
         self.raw_sample_df = pd.read_csv(file_name,sep="\t")
         self.raw_sample = self.raw_sample_df.to_numpy()
-        
+                
         # removing outliers
         self.sample_df = self.raw_sample_df[(np.abs(stats.zscore(self.raw_sample_df)) < 3.1).all(axis=1)]
         self.sample = self.sample_df.to_numpy()
@@ -390,11 +391,11 @@ class stat_model:
         # updating sample_imported
         self.sample_imported = True
         
+        # number of data
+        self.n = len(self.sample_df)
+
         # returning to root directory
         set_directory(root_directory)
-        
-        #return self.sample_df.info()
-    
     
     
     
