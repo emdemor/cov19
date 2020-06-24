@@ -83,6 +83,7 @@ def main(file_name):
 		                              file_name = mcmc_file_name
 		                              )
 	
+	'''
 	print('[info]: Reading mcmc sample.\n')	
 	StatModel.import_sample(file_name = mcmc_file_name)
 	SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173)
@@ -166,6 +167,7 @@ def main(file_name):
 	#plt.savefig('results/cases_projection.pdf')
 	#plt.show()
 	print('\n\n')
+	'''
 
 
 if __name__ == "__main__":
