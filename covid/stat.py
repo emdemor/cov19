@@ -25,9 +25,20 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from tqdm import tqdm
-from .functions import distribute_among_walkers, riffle,notebook_directory,set_directory
+from .functions import set_dir_struct,distribute_among_walkers, riffle,notebook_directory,set_directory
 from scipy import stats
 from covid import root_directory,tables_directory
+from os import path
+
+# setting directory structure
+root_directory,tables_directory = set_dir_struct();     
+set_directory(root_directory)
+
+__RESULTS_DIR__       = 'results'
+__ESTIMATE_OUT_FILE__ = 'sigle-parameter-estimates.csv'
+__GTC_OUT_FILE__      = 'gtc-graphs.png'
+__CRD_OUT_FILE__      = "crd-curve.png"
+
 
 class stat_model:
     '''
@@ -86,6 +97,7 @@ class stat_model:
                  tend=False
                  ):
         
+        print('[info]: Defining statistical model.')
         self.dataframe = dataframe
         self.ep_model = ep_model
         self.par_est = par_est
@@ -297,6 +309,9 @@ class stat_model:
         void
         
         """
+
+        print('[info]: Generating a mcmc sample by metropolis-hastings algorithm.\n')
+        
         
         # distributing the points to walkers
         n_walkers_list = distribute_among_walkers(n_points,n_walkers)
@@ -377,6 +392,8 @@ class stat_model:
             Information about the sample imported
         """
 
+        print('[info]: Reading mcmc sample file.')
+
         # setting tables directory
         set_directory(tables_directory)
         
@@ -384,9 +401,23 @@ class stat_model:
         self.raw_sample_df = pd.read_csv(file_name,sep="\t")
         self.raw_sample = self.raw_sample_df.to_numpy()
                 
-        # removing outliers
-        self.sample_df = self.raw_sample_df[(np.abs(stats.zscore(self.raw_sample_df)) < 3.1).all(axis=1)]
-        self.sample = self.sample_df.to_numpy()
+        # Filtering outliers (WRONG)
+        if False:
+            None
+            # DIC = self.raw_sample_df.quantile(0.75)-self.raw_sample_df.quantile(0.25)
+            # INF = self.raw_sample_df.quantile(0.25)-1.5*DIC
+            # SUP = self.raw_sample_df.quantile(0.75)+1.5*DIC
+
+            # conditions = True
+            # conditions &= self.raw_sample_df > INF
+            # conditions &= self.raw_sample_df < SUP
+
+            # self.sample_df = self.raw_sample_df[conditions]
+            # self.sample = self.sample_df.to_numpy()
+        else:
+            self.sample_df = self.raw_sample_df
+            self.sample = self.sample_df.to_numpy()
+
         
         # updating sample_imported
         self.sample_imported = True
@@ -415,7 +446,7 @@ class stat_model:
         void
         
         """
-        
+        print('[info]: Ploting epidemiological model curves with dataset.')
         model = self.solve(par)
 
         # Confirmed Cases Plot
@@ -436,7 +467,7 @@ class stat_model:
         plt.ylabel('thousands of people')
         plt.grid()
         set_directory(tables_directory)
-        plt.savefig("crd-curve.png")
+        plt.savefig(__CRD_OUT_FILE__)
         set_directory(root_directory)
         plt.show()
  
@@ -461,15 +492,28 @@ class stat_model:
         
         # check if user imported a sample
         if not self.sample_imported:
-            print('Error: you must read a mcmc sample file first.')
+            print('[error]: you must read a mcmc sample file first.')
             return []
         
         else:
+            print('[info]: Evaluating statistical properties of sample.')
             var = 100*alpha/2
-            interval = np.array(list(map(lambda index: np.percentile(self.raw_sample[:, index], [var, 50,100-var]),list(range(self.ndim)))))
-            return interval
-            
-   
+
+            med = self.raw_sample_df.mean()
+
+            interval = np.array(list(map(lambda index: np.percentile(self.raw_sample[:, index], [50,var, 100-var]),list(range(self.ndim)))))
+            df_results = pd.DataFrame({ 'Parameters':self.par_labels,
+                                        'Mean': med,
+                                        'Medians':interval[:,0],
+                                        '1 sig interval min': interval[:,1],
+                                        '1 sig interval max': interval[:,2]
+                                      })
+
+            df_results .to_csv(path.join(__RESULTS_DIR__,__ESTIMATE_OUT_FILE__),sep='\t',index=False)
+            #var = list(map(lambda label, estim: label+str(estim[0]))
+            return df_results
+
+
 
      
     def gtc_plot(self,
@@ -479,7 +523,7 @@ class stat_model:
                  custom_label_font = {'family':'DejaVu Sans', 'size':10}, 
                  custom_tick_font = {'family':'DejaVu Sans', 'size':8},
                  save_figure = False,
-                 file_name = 'figGTC.png'
+                 file_name = __GTC_OUT_FILE__
             ):
         
         """
@@ -508,10 +552,46 @@ class stat_model:
                    )
         
         if save_figure:
-            GTC.savefig('results/GTC.png')
+            set_directory(root_directory)
+            GTC.savefig(path.join(__RESULTS_DIR__,__GTC_OUT_FILE__ ))
+
         
         return GTC
             
-            
+    def evaluate_epidemiolical_parameters():
+
+        print('[info]: Generating a confidence region for the curves.')
+        TEND = 365;
+        ALPHA = 0.02;
+        
+        # # Raw Estimated Parameters
+        # par_est = SingleParameterEstimates[:,1]
+
+        # # Solving Equations
+        # x0 = [10**(par_est[-1]),1/scl_factor,0,0]
+
+
+        # msird_av = mod_sird(par_est, x0,TEND)
+        # msird_av.solve()
+
+        # t = msird_av.days_list
+
+        # # Confirmed Cases Plot
+        # c_model = msird_av.confirmed_list
+        # plt.plot(t,c_model,color='#27408B', label='Confirmed',zorder=10)
+        # plt.scatter(brasil_df.days_list,brasil_df.confirmed_list, color='#03254c',s=9,zorder=13)
+
+
+        # # Recovered Cases Plot
+        # r_model = msird_av.recovered_list
+        # plt.plot(t,r_model,color='#008B45', label='Recovered',zorder=10)
+        # plt.scatter(brasil_df.days_list,brasil_df.recovered_list, color='#1e663b',alpha=1.,s=9,zorder=12)
+
+        # # Death Cases Plot
+        # d_model = msird_av.death_list
+        # plt.plot(t,d_model,color='#EE7621', label='Deaths',zorder=10)
+        # plt.scatter(brasil_df.days_list,brasil_df.death_list, color='#FF7F24',alpha=1.,s=9,zorder=11)
+
+
           
         
