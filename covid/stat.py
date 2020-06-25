@@ -29,6 +29,7 @@ from .functions import set_dir_struct,distribute_among_walkers, riffle,notebook_
 from scipy import stats
 from covid import root_directory,tables_directory
 from os import path
+from numpy import random
 
 # setting directory structure
 root_directory,tables_directory = set_dir_struct();     
@@ -38,7 +39,7 @@ __RESULTS_DIR__       = 'results'
 __ESTIMATE_OUT_FILE__ = 'sigle-parameter-estimates.csv'
 __GTC_OUT_FILE__      = 'gtc-graphs.png'
 __CRD_OUT_FILE__      = "crd-curve.png"
-
+__CURVES_PROJ_FILE__  = 'cases_projection.png'
 
 class stat_model:
     '''
@@ -558,40 +559,84 @@ class stat_model:
         
         return GTC
             
-    def evaluate_epidemiolical_parameters():
+    def evaluate_epidemiological_parameters(self,
+                                            par_est,
+                                            TEND = 365,
+                                            ALPHA = 0.02,
+                                            quantity = 1):
 
         print('[info]: Generating a confidence region for the curves.')
-        TEND = 365;
-        ALPHA = 0.02;
         
         # # Raw Estimated Parameters
         # par_est = SingleParameterEstimates[:,1]
 
-        # # Solving Equations
-        # x0 = [10**(par_est[-1]),1/scl_factor,0,0]
+        # Solving Equations
+        x0 = [10**(self.par_est[-1]),self.rescale,0,0]
+
+        #plt.figure(figsize=(9, 3))
+        plt.close()
+        #print('[info]: Solving')
+        msird_av = self.ep_model(par_est, x0,TEND)
+        msird_av.solve()
+
+        t = msird_av.days_list
+
+        # Confirmed Cases Plot
+        c_model = msird_av.confirmed_list
+        plt.plot(t,c_model,color='#27408B', label='Confirmed',zorder=10)
+        plt.scatter(self.dataframe.days_list,self.dataframe.confirmed_list, color='#03254c',s=9,zorder=13)
 
 
-        # msird_av = mod_sird(par_est, x0,TEND)
-        # msird_av.solve()
+        # Recovered Cases Plot
+        r_model = msird_av.recovered_list
+        plt.plot(t,r_model,color='#008B45', label='Recovered',zorder=10)
+        plt.scatter(self.dataframe.days_list,self.dataframe.recovered_list, color='#1e663b',alpha=1.,s=9,zorder=12)
 
-        # t = msird_av.days_list
-
-        # # Confirmed Cases Plot
-        # c_model = msird_av.confirmed_list
-        # plt.plot(t,c_model,color='#27408B', label='Confirmed',zorder=10)
-        # plt.scatter(brasil_df.days_list,brasil_df.confirmed_list, color='#03254c',s=9,zorder=13)
-
-
-        # # Recovered Cases Plot
-        # r_model = msird_av.recovered_list
-        # plt.plot(t,r_model,color='#008B45', label='Recovered',zorder=10)
-        # plt.scatter(brasil_df.days_list,brasil_df.recovered_list, color='#1e663b',alpha=1.,s=9,zorder=12)
-
-        # # Death Cases Plot
-        # d_model = msird_av.death_list
-        # plt.plot(t,d_model,color='#EE7621', label='Deaths',zorder=10)
-        # plt.scatter(brasil_df.days_list,brasil_df.death_list, color='#FF7F24',alpha=1.,s=9,zorder=11)
+        # Death Cases Plot
+        d_model = msird_av.death_list
+        plt.plot(t,d_model,color='#EE7621', label='Deaths',zorder=10)
+        plt.scatter(self.dataframe.days_list,self.dataframe.death_list, color='#FF7F24',alpha=1.,s=9,zorder=11)
+    
+        #plt.savefig(path.join(__RESULTS_DIR__,__CURVES_PROJ_FILE__))
 
 
-          
+        final_deaths = []
+        final_cases  = []
+
+        for index in tqdm(list(random.choice(range(len(self.sample)),quantity))):
+            
+            par_rdn = self.sample[index]
+            
+
+            # Solving Equations
+            x0 = [10**(par_rdn[-1]),self.rescale,0,0]
+            msird_av = self.ep_model(par_rdn, x0,TEND)
+            msird_av.solve()
+            
+            t = msird_av.days_list
+            
+            # Confirmed Cases Plot
+            c_model = msird_av.confirmed_list
+            plt.plot(t,c_model,color='#87CEFA',  alpha=ALPHA, linewidth=3)
+            
+            # Recovered Cases Plot
+            r_model = msird_av.recovered_list
+            plt.plot(t,r_model,color='#98e0b5',alpha=ALPHA, linewidth=3)
+            
+            # Death Cases Plot
+            d_model = msird_av.death_list
+            plt.plot(t,d_model,color='#FFDAB9', alpha=ALPHA, linewidth=3)
+            
+            final_cases.append(np.interp(TEND, t, c_model))
+            final_deaths.append(np.interp(TEND, t, d_model))
+            
+
+    #plt.legend(loc="upper left")
+    #plt.xlabel('days after first case')
+    #plt.ylabel('thousands of people')
+    #plt.grid()
+
+    #plt.show()
+    #plt.show()
+              
         

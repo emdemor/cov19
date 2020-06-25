@@ -96,13 +96,20 @@ class mod_sird:
         
     '''
     
-    def __init__(self,par,x0,tend,tbeg=0,npoints=100):
+    def __init__(self,
+                 par,
+                 x0,
+                 tend,
+                 tbeg=0,
+                 npoints=100
+                 ):
         
         self.par = par
         self.x0 = x0
         self.tbeg = tbeg
         self.tend = tend
         self.npoints = npoints
+        self.name = "MSIRD"
         self.solve()
 
 
@@ -155,7 +162,9 @@ class mod_sird:
 
 
 
-    def solve(self):
+    def solve(self,
+              notifications = False
+              ):
         
         """
         This method imports the file where the sample was saved
@@ -171,6 +180,11 @@ class mod_sird:
         :pandas.DataFrame.info()
             Information about the sample imported
         """
+
+        if notifications:
+            print('[info]: Solving differential equations for '+self.name+' model. ')
+            
+
         
         # getting the time values
         self.days_list = np.linspace(self.tbeg,self.tend,self.npoints)
