@@ -38,8 +38,10 @@ set_directory(root_directory)
 __RESULTS_DIR__       = 'results'
 __ESTIMATE_OUT_FILE__ = 'sigle-parameter-estimates.csv'
 __GTC_OUT_FILE__      = 'gtc-graphs.png'
-__CRD_OUT_FILE__      = "crd-curve.png"
+__CRD_OUT_FILE__      = 'crd-curve.png'
 __CURVES_PROJ_FILE__  = 'cases_projection.png'
+__EP_PARAMETES_FILE__ =  'epidemiological_par.csv'
+__TEND__              = 365
 
 class stat_model:
     '''
@@ -560,16 +562,83 @@ class stat_model:
         return GTC
             
     def evaluate_epidemiological_parameters(self,
-                                            par_est,
-                                            TEND = 365,
-                                            ALPHA = 0.02,
-                                            quantity = 1):
+                                            TEND = __TEND__,
+                                            overwrite = True,
+                                            file_name = __EP_PARAMETES_FILE__,
+                                            sample = 0.1
+                                            ):
 
-        print('[info]: Generating a confidence region for the curves.')
+        print('[info]: Generating a confidence region for epidemiological parameters.')
+
+        # checking if user want all sample or just a part
+
+        if (type(sample) == int) and (0 < sample < len(self.sample)):
+            sample_list = [self.sample[index] for index in list(random.choice(range(len(self.sample)),sample))]
+
+        elif (type(sample) == float) and (0. < sample <= 1.0):
+            sample = int(sample*round(len(self.sample)))
+            sample_list = [self.sample[index] for index in list(random.choice(range(len(self.sample)),sample))]
+        else:
+            sample_list = self.sample
+
+        # updating sample_imported
+        if not self.sample_imported:
+            print('[error]: You need to generate and import a sample.')
+
+        else:
         
+            # changing to tables directory
+            set_directory(tables_directory)
+            
+            # cleaning the old file
+            if overwrite:
+                open(file_name, 'w').close()
+
+            # open a new file to append
+            file = open(file_name, 'a')
+
+            # writing the header
+            if overwrite:
+                PAR_LAB = self.par_labels + ['Confirmed','Deaths']
+                file.write(''.join(riffle(PAR_LAB,'\t'))+'\n')
+
+            # loop through the sample parameters
+            for par in tqdm(sample_list):
+
+                #print(par)
+
+                # initial conditions
+                x0 = [10**(par[-1]),self.rescale,0,0]
+
+                #solving equations
+                msird_av = self.ep_model(par, x0,TEND)
+                msird_av.solve()
+                
+                # time list
+                t = msird_av.days_list
+                
+                # Confirmed Cases Plot
+                c_model = msird_av.confirmed_list
+                
+                # Recovered Cases Plot
+                r_model = msird_av.recovered_list
+                
+                # Death Cases Plot
+                d_model = msird_av.death_list
+
+                PAR = np.concatenate((par, np.array([np.interp(TEND, t, c_model),np.interp(TEND, t, d_model)])))
+                
+                # writing on file
+                file.write(''.join(riffle(list(map(str,PAR)),'\t'))+'\n')
+
+            file.close()
+
+
+
         # # Raw Estimated Parameters
         # par_est = SingleParameterEstimates[:,1]
 
+        '''
         # Solving Equations
         x0 = [10**(self.par_est[-1]),self.rescale,0,0]
 
@@ -638,5 +707,6 @@ class stat_model:
 
     #plt.show()
     #plt.show()
+    '''
               
         

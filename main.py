@@ -70,11 +70,13 @@ def main(file_name):
 	
 	StatModel.import_sample(file_name = param['mcmc_file_name'])
 	SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173)
-	GTCPlot = StatModel.gtc_plot(save_figure = True)
+	#GTCPlot = StatModel.gtc_plot(save_figure = True)
 	#print('\n',SingleParameterEstimates,'\n\n')
 
-
-	StatModel.evaluate_epidemiological_parameters(SingleParameterEstimates['Mean'].to_list())
+	if param['ep_par_prop']:
+		StatModel.evaluate_epidemiological_parameters(sample    = param['ep_par_sample'],
+			                                          overwrite = param['ep_par_overwrite']
+			                                         )
 
 	'''
 
