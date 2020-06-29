@@ -53,14 +53,14 @@ def import_parameters(file_name: str):
                   'mcmc_file_name'   : json.loads(config.get("MCMC", "file_name")),
                   'generate_mcmc'    : json.loads(config.get("MCMC", "generate_mcmc")),
                   'overwrite_file'   : json.loads(config.get("MCMC", "overwrite_file")),
-                  'ep_par_prop'      : json.loads(config.get("MCMC", "ep_par_prop")),
-                  'ep_par_sample'    : json.loads(config.get("MCMC", "ep_par_sample")),
-                  'ep_par_overwrite' : json.loads(config.get("MCMC", "ep_par_overwrite")),
                   'sample_length'    : json.loads(config.get("MCMC", "sample_length")),
                   'n_walkers'        : json.loads(config.get("MCMC", "n_walkers")),
                   'fit_confirmed'    : json.loads(config.get("MCMC", "fit_confirmed")),
                   'fit_death'        : json.loads(config.get("MCMC", "fit_death")),
-                  'fit_recovered'    : json.loads(config.get("MCMC", "fit_recovered"))
+                  'fit_recovered'    : json.loads(config.get("MCMC", "fit_recovered")),
+                  'ep_par_prop'      : json.loads(config.get("EPID", "ep_par_prop")),
+                  'ep_par_sample'    : json.loads(config.get("EPID", "ep_par_sample")),
+                  'ep_par_overwrite' : json.loads(config.get("EPID", "ep_par_overwrite"))
                   }
 
     else:

@@ -113,7 +113,7 @@ def read_dataset(update_data = False,
     df['Country_Region'] = df['Country_Region'].replace('China (mainland)','China')
     
     # Creating a new column
-    df['Actives'] = df['Confirmed']-df['Deaths']-df['Deaths']
+    df['Actives'] = df['Confirmed']-df['Deaths']-df['Recovered']
 
     return df
 
