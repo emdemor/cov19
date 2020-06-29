@@ -29,7 +29,7 @@ The main result in this version is to plot de curves from the model for a specif
 </p>
 
 <p align="center">
-  <img src="./results/GTC.png"/>
+  <img src="./results/gtc-graphs.png"/>
 </p>
 
 ### 2. Dataset
