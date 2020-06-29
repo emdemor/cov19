@@ -28,28 +28,11 @@ The main result in this version is to plot de curves from the model for a specif
   <img src="./results/cases_projection.png"/>
 </p>
 
-
-#### 1.1 Single-Parameter Estimates
-
-<center>
-
-| Parameter |   Mean  |    1σ   |
-|-----------|:-------:|:-------:|
-| α         |  0.8346 |  0.0003 |
-| β         |  0.2655 |  0.0002 |
-| ρ         |  0.1084 |  0.0002 |
-| δ         | 0.01085 | 0.00005 |
-| log_s0     |  3.517  |  0.001  |
-
-</center>
-
-#### 1.2 GTC Plot
-
 <p align="center">
   <img src="./results/GTC.png"/>
 </p>
 
 ### 2. Dataset
 
-Here, we are using the Microsoft Data, from the repo https://github.com/microsoft/Bing-COVID-19-Data.
+Here, we are using the Microsoft Data, from the repo https://github.com/microsoft/Bing-COVID-19-Data. 
 ]
