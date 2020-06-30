@@ -40,7 +40,7 @@ __ESTIMATE_OUT_FILE__ = 'sigle-parameter-estimates.csv'
 __GTC_OUT_FILE__      = 'gtc-graphs.png'
 __CRD_OUT_FILE__      = 'crd-curve.png'
 __CURVES_PROJ_FILE__  = 'cases_projection.png'
-__EP_PARAMETES_FILE__ =  'epidemiological_par.csv'
+__EP_PARAMETES_FILE__ = 'epidemiological_par.csv'
 __TEND__              = 365
 
 class stat_model:
@@ -315,7 +315,6 @@ class stat_model:
 
         print('[info]: Generating a mcmc sample by metropolis-hastings algorithm.')
 
-
         # distributing the points to walkers
         n_walkers_list = distribute_among_walkers(n_points,n_walkers)
 
@@ -332,7 +331,6 @@ class stat_model:
         # writing the header
         if overwrite:
             file.write(''.join(riffle(self.par_labels,'\t'))+'\n')
-
 
         # looping through the walkers
         for ind_walker in range(len(n_walkers_list)):
@@ -516,6 +514,7 @@ class stat_model:
 
             df_results .to_csv(path.join(__RESULTS_DIR__,__ESTIMATE_OUT_FILE__),sep='\t',index=False)
             #var = list(map(lambda label, estim: label+str(estim[0]))
+            self.estimates = df_results
             return df_results
 
 
@@ -528,7 +527,8 @@ class stat_model:
                  custom_label_font = {'family':'DejaVu Sans', 'size':10},
                  custom_tick_font = {'family':'DejaVu Sans', 'size':8},
                  save_figure = False,
-                 file_name = __GTC_OUT_FILE__
+                 file_name = __GTC_OUT_FILE__,
+                 show = True
             ):
 
         """
@@ -538,15 +538,17 @@ class stat_model:
 
         Arguments
         ----------
-        void
+        ...
+        ...
+
 
         Returns
         -------
-        GTC: pygtc.plotGTC
-            Variable containing the gtc plot
+        ...
+        ...
 
         """
-
+        plt.close()
         GTC = pygtc.plotGTC(chains=[self.sample ],
                     truths = truths,
                     paramNames = self.par_labels,
@@ -560,20 +562,38 @@ class stat_model:
             set_directory(root_directory)
             GTC.savefig(path.join(__RESULTS_DIR__,__GTC_OUT_FILE__ ))
 
+        if show: plt.show()
+        plt.close()
+        #return GTC
 
-        return GTC
+
+
 
     def evaluate_epidemiological_parameters(self,
-                                            TEND = __TEND__,
+                                            tend = __TEND__,
                                             overwrite = True,
                                             file_name = __EP_PARAMETES_FILE__,
                                             sample = 0.1
                                             ):
 
-        print('[info]: Generating a confidence region for epidemiological parameters.')
+        """
+        This method gives parametric estimates to parameters
+
+        Arguments
+        ----------
+        ...
+        ...
+
+        Returns
+        -------
+        ...
+        ...
+
+        """
+
+        print('[info]: Generating confidence regions for epidemiological curves.')
 
         # checking if user want all sample or just a part
-
         if (type(sample) == int) and (0 < sample < len(self.sample)):
             sample_list = [self.sample[index] for index in list(random.choice(range(len(self.sample)),sample))]
 
@@ -589,7 +609,7 @@ class stat_model:
 
         else:
 
-            # changing to tables directory
+            # changing to tables folder
             set_directory(tables_directory)
 
             # cleaning the old file
@@ -607,13 +627,11 @@ class stat_model:
             # loop through the sample parameters
             for par in tqdm(sample_list,desc='[wlkr1]: '):
 
-                #print(par)
-
                 # initial conditions
                 x0 = [10**(par[-1]),self.rescale,0,0]
 
                 #solving equations
-                msird_av = self.ep_model(par, x0,TEND)
+                msird_av = self.ep_model(par, x0,tend)
                 msird_av.solve()
 
                 # time list
@@ -628,7 +646,7 @@ class stat_model:
                 # Death Cases Plot
                 d_model = msird_av.death_list
 
-                PAR = np.concatenate((par, np.array([np.interp(TEND, t, c_model),np.interp(TEND, t, d_model)])))
+                PAR = np.concatenate((par, np.array([np.interp(tend, t, c_model),np.interp(tend, t, d_model)])))
 
                 # writing on file
                 file.write(''.join(riffle(list(map(str,PAR)),'\t'))+'\n')
@@ -637,76 +655,96 @@ class stat_model:
 
 
 
-        # # Raw Estimated Parameters
-        # par_est = SingleParameterEstimates[:,1]
 
-        '''
-        # Solving Equations
-        x0 = [10**(self.par_est[-1]),self.rescale,0,0]
+    def plot_curves(self,
+    				par_est,
+                    tend  = __TEND__,
+                    alpha = 0.02,
+                    show = True,
+                    save_figure = True,
+                    file_name = __CURVES_PROJ_FILE__
+                    ):
 
-        #plt.figure(figsize=(9, 3))
+        """
+        This method gives parametric estimates to parameters
+
+        Arguments
+        ----------
+        ...
+        ...
+
+        Returns
+        -------
+        ...
+        ...
+
+        """
+
+        print('[info]: Plotting curves.')
         plt.close()
-        #print('[info]: Solving')
-        msird_av = self.ep_model(par_est, x0,TEND)
-        msird_av.solve()
 
-        t = msird_av.days_list
+        # Solving Equations
+        x0 = [10**(par_est[-1]),self.rescale,0,0]
+        model = self.ep_model(par_est, x0,tend)
+        model.solve()
 
-        # Confirmed Cases Plot
-        c_model = msird_av.confirmed_list
+        # Time list
+        t = model.days_list
+
+        #Confirmed Cases Plot
+        c_model = model.confirmed_list
         plt.plot(t,c_model,color='#27408B', label='Confirmed',zorder=10)
-        plt.scatter(self.dataframe.days_list,self.dataframe.confirmed_list, color='#03254c',s=9,zorder=13)
-
+        plt.scatter(self.dataframe.days_list,
+                    self.dataframe.confirmed_list,
+                    color='#03254c',
+                    s=9,
+                    zorder=13)
 
         # Recovered Cases Plot
-        r_model = msird_av.recovered_list
+        r_model = model.recovered_list
         plt.plot(t,r_model,color='#008B45', label='Recovered',zorder=10)
-        plt.scatter(self.dataframe.days_list,self.dataframe.recovered_list, color='#1e663b',alpha=1.,s=9,zorder=12)
+        plt.scatter(self.dataframe.days_list,
+                    self.dataframe.recovered_list,
+                    color='#1e663b',
+                    alpha=1.,
+                    s=9,
+                    zorder=12)
 
         # Death Cases Plot
-        d_model = msird_av.death_list
+        d_model = model.death_list
         plt.plot(t,d_model,color='#EE7621', label='Deaths',zorder=10)
         plt.scatter(self.dataframe.days_list,self.dataframe.death_list, color='#FF7F24',alpha=1.,s=9,zorder=11)
 
-        #plt.savefig(path.join(__RESULTS_DIR__,__CURVES_PROJ_FILE__))
-
-
+        #plt.show()
         final_deaths = []
         final_cases  = []
 
-        for index in tqdm(list(random.choice(range(len(self.sample)),quantity))):
+        for index in tqdm(list(random.choice(range(len(self.sample)),500)),desc='[wlkr1]: '):
 
             par_rdn = self.sample[index]
-
-
             # Solving Equations
             x0 = [10**(par_rdn[-1]),self.rescale,0,0]
-            msird_av = self.ep_model(par_rdn, x0,TEND)
-            msird_av.solve()
-
-            t = msird_av.days_list
+            model = self.ep_model(par_rdn, x0,tend)
+            model.solve()
+            t = model.days_list
 
             # Confirmed Cases Plot
-            c_model = msird_av.confirmed_list
-            plt.plot(t,c_model,color='#87CEFA',  alpha=ALPHA, linewidth=3)
+            c_model = model.confirmed_list
+            plt.plot(t,c_model,color='#87CEFA',  alpha=alpha, linewidth=3)
 
             # Recovered Cases Plot
-            r_model = msird_av.recovered_list
-            plt.plot(t,r_model,color='#98e0b5',alpha=ALPHA, linewidth=3)
+            r_model = model.recovered_list
+            plt.plot(t,r_model,color='#98e0b5',alpha=alpha, linewidth=3)
 
             # Death Cases Plot
-            d_model = msird_av.death_list
-            plt.plot(t,d_model,color='#FFDAB9', alpha=ALPHA, linewidth=3)
+            d_model = model.death_list
+            plt.plot(t,d_model,color='#FFDAB9', alpha=alpha, linewidth=3)
 
-            final_cases.append(np.interp(TEND, t, c_model))
-            final_deaths.append(np.interp(TEND, t, d_model))
-
-
-    #plt.legend(loc="upper left")
-    #plt.xlabel('days after first case')
-    #plt.ylabel('thousands of people')
-    #plt.grid()
-
-    #plt.show()
-    #plt.show()
-    '''
+        plt.legend(loc="upper left")
+        plt.xlabel('days after first case')
+        plt.ylabel('number of people [✕'+str(int(1/self.rescale))+']')
+        plt.grid()
+        if save_figure:
+            plt.savefig(path.join(__RESULTS_DIR__,__CURVES_PROJ_FILE__))
+        if show: plt.show()
+        plt.close()

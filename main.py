@@ -31,22 +31,17 @@ def main(file_name):
 
 	# import parameter from configuration file
 	param = import_parameters(file_name)
- 
-	# dimension of parametric space
-	# par_dim = len(param['par_labels'])
 
+	# reading dataset
 	df = read_dataset(update_data = param['data_update'],
                 	  url         = param['data_url'] ,
                       local_dataset_filename = param['data_filename'])
 
-	# choosing a country
-	brasil_df = country(name      = param['country_1'][0],
+	# getting country information
+	brasil_df = country(name       = param['country_1'][0],
 		                population = param['country_1'][1]
 		                )
-
 	brasil_df.dataset(df,rescaling_by=1/param['scl_factor'])
-
-
 
 	# defining statistical model
 	StatModel = stat_model(brasil_df,
@@ -55,8 +50,6 @@ def main(file_name):
 	                       rescaling_by = 1/param['scl_factor'],
 	                       par_labels   = param['par_labels']
 	                       )
-	#StatModel.data_model_plot(param['par_est'])
-
 
 	# generating a mcmc sample by metropolis-hastings algorithm
 	if param['generate_mcmc']:
@@ -65,31 +58,33 @@ def main(file_name):
 		                              overwrite = param['overwrite_file'],
 		                              file_name = param['mcmc_file_name']
 		                              )
-	
-	
-	
-	StatModel.import_sample(file_name = param['mcmc_file_name'])
+
+	# import mcmc sample
+	StatModel.import_sample(file_name = param['mcmc_file_name'],
+                        	filter_outliers = True)
+
+	# evaluating estimates for parameters
 	SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173)
-	#GTCPlot = StatModel.gtc_plot(save_figure = True)
-	#print('\n',SingleParameterEstimates,'\n\n')
+
 
 	if param['ep_par_prop']:
-		StatModel.evaluate_epidemiological_parameters(sample    = param['ep_par_sample'],
-			                                          overwrite = param['ep_par_overwrite']
-			                                         )
+			StatModel.evaluate_epidemiological_parameters(
+									overwrite = param['ep_par_overwrite'],
+									file_name = param['ep_file_name'],
+									sample    = param['ep_par_sample']
+	                                )
 
-	'''
 
-	plt.legend(loc="upper left")
-	plt.xlabel('days after first case')
-	plt.ylabel('thousands of people')
-	plt.grid()
+	# generating GTC plot
+	if param['gtc_plot']:
+		StatModel.gtc_plot(save_figure=True,show=False)
 
-	plt.savefig('results/cases_projection.png')
-	#plt.savefig('results/cases_projection.pdf')
-	#plt.show()
-	print('\n\n')
-	'''
+	# plotting curves
+	if param['ep_plot_curves']:
+		StatModel.plot_curves(SingleParameterEstimates['Medians'].to_list(),
+	                    save_figure = True,
+	                    show        = False
+	                    )
 
 
 if __name__ == "__main__":

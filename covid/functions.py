@@ -58,9 +58,12 @@ def import_parameters(file_name: str):
                   'fit_confirmed'    : json.loads(config.get("MCMC", "fit_confirmed")),
                   'fit_death'        : json.loads(config.get("MCMC", "fit_death")),
                   'fit_recovered'    : json.loads(config.get("MCMC", "fit_recovered")),
+                  'gtc_plot'         : json.loads(config.get("MCMC", "gtc_plot")),
+                  'ep_file_name'      : json.loads(config.get("EPID", "ep_file_name")),
                   'ep_par_prop'      : json.loads(config.get("EPID", "ep_par_prop")),
                   'ep_par_sample'    : json.loads(config.get("EPID", "ep_par_sample")),
-                  'ep_par_overwrite' : json.loads(config.get("EPID", "ep_par_overwrite"))
+                  'ep_par_overwrite' : json.loads(config.get("EPID", "ep_par_overwrite")),
+                  'ep_plot_curves'   : json.loads(config.get("EPID", "ep_plot_curves"))
                   }
 
     else:
