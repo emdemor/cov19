@@ -193,8 +193,8 @@ class mod_sird:
         self.x = odeint(self.diff_eq,self.x0,self.days_list,args = (self.par,))
         '''
         Its important to note that (par_est,) is the way to define a tuple
-        with just ode element. When we put (par_est), the  parenteses won't
-        indicate a typle
+        with just one element. When we put (par_est), the  parenteses won't
+        indicate a tuple
         '''
         
         #setting the variables

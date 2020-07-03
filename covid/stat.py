@@ -24,12 +24,13 @@ import random,pygtc
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from tqdm import tqdm
+
+from tqdm       import tqdm
 from .functions import set_dir_struct,distribute_among_walkers, riffle,notebook_directory,set_directory
-from scipy import stats
-from covid import root_directory,tables_directory
-from os import path
-from numpy import random
+from scipy      import stats
+from covid      import root_directory,tables_directory
+from os         import path
+from numpy      import random
 
 # setting directory structure
 root_directory,tables_directory = set_dir_struct();
