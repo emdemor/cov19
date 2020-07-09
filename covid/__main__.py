@@ -18,7 +18,7 @@ Informations
     Status: in development
 """
 
-from covid import read_dataset,country,mod_sird
+from covid import read_dataset,country,mod_sird,gmsird,gen_sird
 from covid.stat import *
 from covid.functions import *
 from numpy import random
@@ -42,15 +42,45 @@ def main(file_name):
 	brasil_df = country(name       = param['country_1'][0],
 		                population = param['country_1'][1]
 		                )
-	brasil_df.dataset(df,rescaling_by=1/param['scl_factor'])
+	brasil_df.dataset(df,
+		rescaling_by=1/param['scl_factor'],
+		last_index = param['last_index'])
 
-	# defining statistical model
-	StatModel = stat_model(brasil_df,
-	                       mod_sird,
-	                       param['par_est'],
-	                       rescaling_by = 1/param['scl_factor'],
-	                       par_labels   = param['par_labels']
-	                       )
+	
+	# If user chooses 'mod_sird'
+	if param['ep_model'] == 'Mod-SIRD':
+
+		# defining statistical model
+		StatModel = stat_model(brasil_df,
+		                       mod_sird,
+		                       param['par_est'],
+		                       rescaling_by = 1/param['scl_factor'],
+		                       par_labels   = param['par_labels']
+		                       )
+
+	# If user chooses 'gmsird'
+	elif param['ep_model'] == 'GM-SIRD':
+
+		# defining statistical model
+		StatModel = stat_model(brasil_df,
+		                       gmsird,
+		                       param['par_est'],
+		                       rescaling_by = 1/param['scl_factor'],
+		                       par_labels   = param['par_labels']
+		                       )
+
+
+	# If user chooses 'gen_sird'
+	elif param['ep_model'] == 'Gen-SIRD':
+
+		# defining statistical model
+		StatModel = stat_model(brasil_df,
+		                       gen_sird,
+		                       param['par_est'],
+		                       rescaling_by = 1/param['scl_factor'],
+		                       par_labels   = param['par_labels']
+		                       )
+
 
 	# generating a mcmc sample by metropolis-hastings algorithm
 	if param['generate_mcmc']:
@@ -85,7 +115,8 @@ def main(file_name):
 		StatModel.plot_curves(SingleParameterEstimates['Medians'].to_list(),
 	                    save_figure = True,
 	                    show        = False,
-	                    file_name = param['ep_crv_prj_file']
+	                    file_name = param['ep_crv_prj_file'],
+                        plot_title = param['country_1'][0]+' - '+param['ep_model']
 	                    )
 
 

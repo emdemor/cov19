@@ -41,7 +41,9 @@ def import_parameters(file_name: str):
         config.read(file_name)
 
         #import parameters
-        result = {'scl_factor'       : json.loads(config.get("MODEL", "scl_factor")),
+        result = {
+                  'ep_model'         : json.loads(config.get("MODEL", "ep_model")),
+                  'scl_factor'       : json.loads(config.get("MODEL", "scl_factor")),
                   'par_labels'       : json.loads(config.get("MODEL", "par_labels")),
                   'par_dim'          : len(json.loads(config.get("MODEL", "par_labels"))),
                   'par_est'          : json.loads(config.get("MODEL", "par_est")),
@@ -50,6 +52,7 @@ def import_parameters(file_name: str):
                   'data_filename'    : json.loads(config.get("DATASET", "data_filename")),
                   'data_url'         : json.loads(config.get("DATASET", "data_url")),
                   'data_update'      : json.loads(config.get("DATASET", "update")),
+                  'last_index'      : json.loads(config.get("DATASET", "last_index")),
 
                   'country_1'        : json.loads(config.get("COUNTRY", "country_1")),
 

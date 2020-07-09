@@ -72,7 +72,7 @@ class country:
         self.name = name
         self.population = population
         
-    def dataset(self,df,rescaling_by=1,last_index=-1):
+    def dataset(self,df,rescaling_by=1,last_index = 'last'):
         
         """
         Receive a global dataframe with COVID data from microsoft repository,
@@ -95,6 +95,10 @@ class country:
         
         # getting the data from country
         df_Country = df.loc[(df['Country_Region'] == self.name) & (df['AdminRegion1'] == '')]
+
+        # selecting interval if user requires
+        if (not isinstance(last_index,str)) & (isinstance(last_index,int)):
+            df_Country = df_Country.iloc[1:last_index,:]
         
         # getting the first case
         first_case = df_Country['Updated'].min()

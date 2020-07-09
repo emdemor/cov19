@@ -1,0 +1,24 @@
+#!/bin/sh
+file="parameters/$1.ini"
+python -m covid $file
+
+# #!/bin/bash
+# # Exemplo Final de Script Shell
+# #
+
+# #Pasta Atual
+# PastaRaiz=$(pwd)
+# # Pasta do class
+# PastaCLASS=$(pwd)
+
+
+# # entro na pasta de resultados
+# #cd output
+# #Arquivo Ini
+# Arq=$1
+# ext=".ini"
+# ArqIni=$Arq$ext
+
+# pyton -m covid $ArqIni $ArqPrec
+   
+  

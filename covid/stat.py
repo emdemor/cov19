@@ -663,7 +663,8 @@ class stat_model:
                     alpha = 0.02,
                     show = True,
                     save_figure = True,
-                    file_name = __CURVES_PROJ_FILE__
+                    file_name = __CURVES_PROJ_FILE__,
+                    plot_title = ''
                     ):
 
         """
@@ -741,6 +742,7 @@ class stat_model:
             d_model = model.death_list
             plt.plot(t,d_model,color='#FFDAB9', alpha=alpha, linewidth=3)
 
+        plt.title(plot_title)
         plt.legend(loc="upper left")
         plt.xlabel('days after first case')
         plt.ylabel('number of people [✕'+str(int(1/self.rescale))+']')
