@@ -18,10 +18,11 @@ Informations
     Status: in development
 """
 
-from covid import read_dataset,country,mod_sird,gmsird
+from covid import read_dataset,country,mod_sird
 from covid.stat import *
 from covid.functions import *
 from numpy import random
+
 import numpy as np
 import pygtc, configparser, json, sys
 import matplotlib.pyplot as plt
@@ -31,7 +32,6 @@ def main(file_name):
 
 	# import parameter from configuration file
 	param = import_parameters(file_name)
-	#param = import_parameters('gmsird.ini')
 
 	# reading dataset
 	df = read_dataset(update_data = param['data_update'],
@@ -46,7 +46,7 @@ def main(file_name):
 
 	# defining statistical model
 	StatModel = stat_model(brasil_df,
-	                       gmsird,#mod_sird,
+	                       mod_sird,
 	                       param['par_est'],
 	                       rescaling_by = 1/param['scl_factor'],
 	                       par_labels   = param['par_labels']
@@ -62,10 +62,10 @@ def main(file_name):
 
 	# import mcmc sample
 	StatModel.import_sample(file_name = param['mcmc_file_name'],
-                       	filter_outliers = True)
+                        	filter_outliers = True)
 
 	# evaluating estimates for parameters
-	SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173)
+	SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173,est_outfile = param["ep_est_out_file"])
 
 
 	if param['ep_par_prop']:
@@ -78,13 +78,14 @@ def main(file_name):
 
 	# generating GTC plot
 	if param['gtc_plot']:
-		StatModel.gtc_plot(save_figure=True,show=False)
+		StatModel.gtc_plot(save_figure=True,show=False,file_name = param['gtc_out_file'])
 
 	# plotting curves
 	if param['ep_plot_curves']:
 		StatModel.plot_curves(SingleParameterEstimates['Medians'].to_list(),
 	                    save_figure = True,
-	                    show        = False
+	                    show        = False,
+	                    file_name = param['ep_crv_prj_file']
 	                    )
 
 

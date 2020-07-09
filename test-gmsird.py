@@ -30,8 +30,8 @@ import covid.dataset as ds
 def main(file_name):
 
 	# import parameter from configuration file
-	param = import_parameters(file_name)
-	#param = import_parameters('gmsird.ini')
+	#param = import_parameters(file_name)
+	param = import_parameters('gmsird.ini')
 
 	# reading dataset
 	df = read_dataset(update_data = param['data_update'],
@@ -51,6 +51,7 @@ def main(file_name):
 	                       rescaling_by = 1/param['scl_factor'],
 	                       par_labels   = param['par_labels']
 	                       )
+	#print(StatModel.log_prob(param['par_est']))
 
 	# generating a mcmc sample by metropolis-hastings algorithm
 	if param['generate_mcmc']:
@@ -62,7 +63,7 @@ def main(file_name):
 
 	# import mcmc sample
 	StatModel.import_sample(file_name = param['mcmc_file_name'],
-                       	filter_outliers = True)
+                        	filter_outliers = True)
 
 	# evaluating estimates for parameters
 	SingleParameterEstimates = StatModel.single_parameter_estimates(alpha=0.3173)
@@ -89,11 +90,12 @@ def main(file_name):
 
 
 if __name__ == "__main__":
+    main('None')
 
-	args = sys.argv;
-
-	if (len(sys.argv) != 2):
-		print('[Error]: You must pass a parameter file to '+str(args[0]))
-	else:
-		main(args[1])
-	print('[status]: Finished.')
+#	args = sys.argv;
+#
+#	if (len(sys.argv) != 2):
+#		print('[Error]: You must pass a parameter file to '+str(args[0]))
+#	else:
+#		main(args[1])
+#	print('[status]: Finished.')

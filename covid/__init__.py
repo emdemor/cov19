@@ -11,7 +11,7 @@ import warnings
 from .functions import set_dir_struct, riffle, file_names, set_directory, distribute_among_walkers
 from .dataset import read_dataset
 from .country import country
-from .models import mod_sird
+from .models import *
 
 
 

@@ -46,10 +46,13 @@ def import_parameters(file_name: str):
                   'par_dim'          : len(json.loads(config.get("MODEL", "par_labels"))),
                   'par_est'          : json.loads(config.get("MODEL", "par_est")),
                   'par_stp'          : json.loads(config.get("MODEL", "par_stp")),
+
                   'data_filename'    : json.loads(config.get("DATASET", "data_filename")),
                   'data_url'         : json.loads(config.get("DATASET", "data_url")),
                   'data_update'      : json.loads(config.get("DATASET", "update")),
+
                   'country_1'        : json.loads(config.get("COUNTRY", "country_1")),
+
                   'mcmc_file_name'   : json.loads(config.get("MCMC", "file_name")),
                   'generate_mcmc'    : json.loads(config.get("MCMC", "generate_mcmc")),
                   'overwrite_file'   : json.loads(config.get("MCMC", "overwrite_file")),
@@ -59,11 +62,18 @@ def import_parameters(file_name: str):
                   'fit_death'        : json.loads(config.get("MCMC", "fit_death")),
                   'fit_recovered'    : json.loads(config.get("MCMC", "fit_recovered")),
                   'gtc_plot'         : json.loads(config.get("MCMC", "gtc_plot")),
+                  'gtc_out_file'     : json.loads(config.get("MCMC", "gtc_out_file")),
+
                   'ep_file_name'      : json.loads(config.get("EPID", "ep_file_name")),
-                  'ep_par_prop'      : json.loads(config.get("EPID", "ep_par_prop")),
-                  'ep_par_sample'    : json.loads(config.get("EPID", "ep_par_sample")),
-                  'ep_par_overwrite' : json.loads(config.get("EPID", "ep_par_overwrite")),
-                  'ep_plot_curves'   : json.loads(config.get("EPID", "ep_plot_curves"))
+                  'ep_par_prop'       : json.loads(config.get("EPID", "ep_par_prop")),
+                  'ep_par_sample'     : json.loads(config.get("EPID", "ep_par_sample")),
+                  'ep_par_overwrite'  : json.loads(config.get("EPID", "ep_par_overwrite")),
+                  'ep_plot_curves'    : json.loads(config.get("EPID", "ep_plot_curves")),
+                  'ep_est_out_file'   : json.loads(config.get("EPID", "ep_est_out_file")),
+                  'ep_crd_out_file'   : json.loads(config.get("EPID", "ep_crd_out_file")),
+                  'ep_crv_prj_file'   : json.loads(config.get("EPID", "ep_crv_prj_file")),
+                  'ep_paramet_file'   : json.loads(config.get("EPID", "ep_paramet_file")),
+                  'ep_t_end'         : json.loads(config.get("EPID", "ep_t_end"))
                   }
 
     else:
@@ -84,7 +94,7 @@ def set_dir_struct():
     
     lista=[];
     lista.append(notebook_directory);
-    lista.append(os.path.join(notebook_directory, "tables"));
+    lista.append(os.path.join("covid","_tables"));
     return lista
 
 

@@ -33,10 +33,10 @@ from os         import path
 from numpy      import random
 
 # setting directory structure
-root_directory,tables_directory = set_dir_struct();
-set_directory(root_directory)
+#root_directory,tables_directory = set_dir_struct();
+#set_directory(root_directory)
 
-__RESULTS_DIR__       = 'results'
+#__RESULTS_DIR__       =  path.join('covid', '_results')
 __ESTIMATE_OUT_FILE__ = 'sigle-parameter-estimates.csv'
 __GTC_OUT_FILE__      = 'gtc-graphs.png'
 __CRD_OUT_FILE__      = 'crd-curve.png'
@@ -320,7 +320,7 @@ class stat_model:
         n_walkers_list = distribute_among_walkers(n_points,n_walkers)
 
         # changing to tables directory
-        set_directory(tables_directory)
+        #set_directory(tables_directory)
 
         # cleaning the old file
         if overwrite:
@@ -369,9 +369,9 @@ class stat_model:
         file.close()
 
         # returning to root directory
-        set_directory(tables_directory)
+        #set_directory(tables_directory)
 
-        # updating mcmc_sample variable
+        # # updating mcmc_sample variable
         self.mcmc_sample = True
 
 
@@ -400,7 +400,7 @@ class stat_model:
         print('[info]: Reading mcmc sample file.')
 
         # setting tables directory
-        set_directory(tables_directory)
+        #set_directory(tables_directory)
 
         #importing
         self.raw_sample_df = pd.read_csv(file_name,sep="\t")
@@ -430,7 +430,7 @@ class stat_model:
         self.n = len(self.sample_df)
 
         # returning to root directory
-        set_directory(root_directory)
+        #set_directory(root_directory)
 
 
 
@@ -470,15 +470,15 @@ class stat_model:
         plt.xlabel('days after first case')
         plt.ylabel('thousands of people')
         plt.grid()
-        set_directory(tables_directory)
+        #set_directory(tables_directory)
         plt.savefig(__CRD_OUT_FILE__)
-        set_directory(root_directory)
+        #set_directory(root_directory)
         plt.show()
 
 
 
 
-    def single_parameter_estimates(self,alpha=0.3173):
+    def single_parameter_estimates(self,alpha=0.3173,est_outfile = __ESTIMATE_OUT_FILE__):
 
         """
         Returns the interval with confidence alpha.
@@ -513,7 +513,7 @@ class stat_model:
                                         '1 sig interval max': interval[:,2]
                                       })
 
-            df_results .to_csv(path.join(__RESULTS_DIR__,__ESTIMATE_OUT_FILE__),sep='\t',index=False)
+            df_results .to_csv(est_outfile,sep='\t',index=False)
             #var = list(map(lambda label, estim: label+str(estim[0]))
             self.estimates = df_results
             return df_results
@@ -560,8 +560,8 @@ class stat_model:
                    )
 
         if save_figure:
-            set_directory(root_directory)
-            GTC.savefig(path.join(__RESULTS_DIR__,__GTC_OUT_FILE__ ))
+            #set_directory(root_directory)
+            GTC.savefig(file_name)
 
         if show: plt.show()
         plt.close()
@@ -611,7 +611,7 @@ class stat_model:
         else:
 
             # changing to tables folder
-            set_directory(tables_directory)
+            #set_directory(tables_directory)
 
             # cleaning the old file
             if overwrite:
@@ -746,6 +746,6 @@ class stat_model:
         plt.ylabel('number of people [✕'+str(int(1/self.rescale))+']')
         plt.grid()
         if save_figure:
-            plt.savefig(path.join(__RESULTS_DIR__,__CURVES_PROJ_FILE__))
+            plt.savefig(file_name)
         if show: plt.show()
         plt.close()
