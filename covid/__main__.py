@@ -116,7 +116,7 @@ def main(file_name):
 	                    save_figure = True,
 	                    show        = False,
 	                    file_name = param['ep_crv_prj_file'],
-                        plot_title = param['country_1'][0]+' - '+param['ep_model']
+                        plot_title = param['country_1'][0]#+' , '+param['ep_model']
 	                    )
 
 
