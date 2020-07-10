@@ -30,13 +30,13 @@ The main result in this version is to plot de curves from the model for a specif
 
 <div class="row">
   <div class="column">
-    <img src="./results/brazil/cases_projection.png" alt="Snow" style="width:100%">
+    <img src="./results/brazil/cases_projection.png" alt="brazil-cases" style="width:30%">
   </div>
   <div class="column">
-    <img src="./results/india/cases_projection.png" alt="Forest" style="width:100%">
+    <img src="./results/india/cases_projection.png" alt="brazil-cases" style="width:30%">
   </div>
   <div class="column">
-    <img src="./results/italy/cases_projection.png" alt="Mountains" style="width:100%">
+    <img src="./results/russia/cases_projection.png" alt="russia-cases" style="width:30%">
   </div>
 </div>
 
