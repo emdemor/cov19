@@ -23,4 +23,4 @@ cd ..
 
 
 file="parameters/$file_ini"
-python -m covid $file
+python -m cov19 $file

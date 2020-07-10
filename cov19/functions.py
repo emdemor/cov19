@@ -97,7 +97,7 @@ def set_dir_struct():
     
     lista=[];
     lista.append(notebook_directory);
-    lista.append(os.path.join("covid","_tables"));
+    lista.append(os.path.join("cov19","_tables"));
     return lista
 
 

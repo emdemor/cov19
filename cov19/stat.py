@@ -28,7 +28,7 @@ import matplotlib.pyplot as plt
 from tqdm       import tqdm
 from .functions import set_dir_struct,distribute_among_walkers, riffle,notebook_directory,set_directory
 from scipy      import stats
-from covid      import root_directory,tables_directory
+from cov19      import root_directory,tables_directory
 from os         import path
 from numpy      import random
 
@@ -36,7 +36,7 @@ from numpy      import random
 #root_directory,tables_directory = set_dir_struct();
 #set_directory(root_directory)
 
-#__RESULTS_DIR__       =  path.join('covid', '_results')
+#__RESULTS_DIR__       =  path.join('cov19', '_results')
 __ESTIMATE_OUT_FILE__ = 'sigle-parameter-estimates.csv'
 __GTC_OUT_FILE__      = 'gtc-graphs.png'
 __CRD_OUT_FILE__      = 'crd-curve.png'
@@ -53,7 +53,7 @@ class stat_model:
     Arguments
     ----------
     dataframe: country.dataframe
-        A pandas dataframe with covid cases in the specific country
+        A pandas dataframe with cov19 cases in the specific country
 
     ep_model:
         Details about the epidemiological model. Models mus bet implemented

@@ -18,15 +18,15 @@ Informations
     Status: in development
 """
 
-from covid import read_dataset,country,mod_sird,gmsird,gen_sird
-from covid.stat import *
-from covid.functions import *
+from cov19 import read_dataset,country,mod_sird,gmsird,gen_sird
+from cov19.stat import *
+from cov19.functions import *
 from numpy import random
 
 import numpy as np
 import pygtc, configparser, json, sys
 import matplotlib.pyplot as plt
-import covid.dataset as ds
+import cov19.dataset as ds
 
 def main(file_name):
 

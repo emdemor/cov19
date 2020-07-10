@@ -20,6 +20,25 @@ This equations must be integrated with inicial conditions given by: s(0)=s_0 , I
 1. [Results](#1-results)
 2. [Dataset](#2-dataset)
 
+## Getting Started
+#### Dependencies
+You need Python 3.7 or later to use **pacotepypi**. You can find it at [python.org](https://www.python.org/).
+You also need setuptools, wheel and twine packages, which is available from [PyPI](https://pypi.org). If you have pip, just run:
+```
+pip install setuptools
+pip install wheel
+pip install twine
+```
+#### Installation
+Clone this repo to your local machine using:
+```
+git clone https://github.com/caiocarneloz/pacotepypi.git
+```
+## Features
+- File structure for PyPI packages
+- Setup with package informations
+- License example
+
 ## 1. Results
 
 The main result in this version is to plot de curves from the model for a specific parameter vector and compare this with dataset. In covid/stat.py, functions has been implemented to generate an MCMC sample, through which it will be possible to make inferences of the parametric intervals.

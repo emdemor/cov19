@@ -209,19 +209,7 @@ class gmsird:
     '''
     Description
     ----------
-    This class defines a epidemiological model to explained the total, 
-    recovered, active infected and deaths cases of the COVID pandemic desease 
-    in a specific country.
-    
-    Its equations descrive the relations between the 4 functions s,i,r and d 
-    describing respectively the number of susceptible, active infected, 
-    recovered and dead individual
-    
-    The diference bewtween Modified SIRD and the usual SIRD model is in the 
-    presence of an aditional parameters alpha as a power on i(t) in 
-    differential equations 
-    
-    
+
     Arguments
     ----------
         par: numpy.array
@@ -395,18 +383,6 @@ class gen_sird:
     '''
     Description
     ----------
-    This class defines a epidemiological model to explained the total, 
-    recovered, active infected and deaths cases of the COVID pandemic desease 
-    in a specific country.
-    
-    Its equations descrive the relations between the 4 functions s,i,r and d 
-    describing respectively the number of susceptible, active infected, 
-    recovered and dead individual
-    
-    The diference bewtween Modified SIRD and the usual SIRD model is in the 
-    presence of an aditional parameters alpha as a power on i(t) in 
-    differential equations 
-    
     
     Arguments
     ----------
