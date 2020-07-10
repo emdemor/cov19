@@ -26,15 +26,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from tqdm       import tqdm
-from .functions import set_dir_struct,distribute_among_walkers, riffle,notebook_directory,set_directory
+from .functions import distribute_among_walkers, riffle
 from scipy      import stats
-from cov19      import root_directory,tables_directory
 from os         import path
 from numpy      import random
 
-# setting directory structure
-#root_directory,tables_directory = set_dir_struct();
-#set_directory(root_directory)
 
 #__RESULTS_DIR__       =  path.join('cov19', '_results')
 __ESTIMATE_OUT_FILE__ = 'sigle-parameter-estimates.csv'
@@ -368,9 +364,6 @@ class stat_model:
 
         file.close()
 
-        # returning to root directory
-        #set_directory(tables_directory)
-
         # # updating mcmc_sample variable
         self.mcmc_sample = True
 
@@ -429,10 +422,6 @@ class stat_model:
         # number of data
         self.n = len(self.sample_df)
 
-        # returning to root directory
-        #set_directory(root_directory)
-
-
 
     def data_model_plot(self,par):
 
@@ -470,9 +459,7 @@ class stat_model:
         plt.xlabel('days after first case')
         plt.ylabel('thousands of people')
         plt.grid()
-        #set_directory(tables_directory)
         plt.savefig(__CRD_OUT_FILE__)
-        #set_directory(root_directory)
         plt.show()
 
 
@@ -560,7 +547,6 @@ class stat_model:
                    )
 
         if save_figure:
-            #set_directory(root_directory)
             GTC.savefig(file_name)
 
         if show: plt.show()

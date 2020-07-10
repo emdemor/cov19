@@ -28,10 +28,6 @@ import numpy as np
 from .functions import set_dir_struct, riffle, file_names, set_directory, distribute_among_walkers
 from os import path
 
-# setting directory structure
-#root_directory,tables_directory = set_dir_struct();     
-#set_directory(root_directory)
-
 # empty dataframe to use in case of error
 __EMPTY_DATAFRAME__ = pd.DataFrame({'ID' :[],
                                   'Updated' :[],

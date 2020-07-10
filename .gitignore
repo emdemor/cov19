@@ -1,3 +1,9 @@
 *.csv
-main.ipynb
+*.ipynb
+cov19.sublime-project
 tests
+dist
+build
+cov19.egg-info
+DESCRIPTION.rst
+docs/INSTRUCTIONS

@@ -1,0 +1,381 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"la",
+				"last_index\tstr ⟠"
+			],
+			[
+				"df",
+				"df_Country\tdict ⟠"
+			],
+			[
+				"reg",
+				"reg_column\tstr ⟠"
+			],
+			[
+				"mod",
+				"mod_sird"
+			],
+			[
+				"result",
+				"results"
+			],
+			[
+				"__",
+				"__ERRORS__"
+			],
+			[
+				"li",
+				"list\ttype ⟠"
+			],
+			[
+				"ero",
+				"y_error"
+			],
+			[
+				"bo",
+				"both"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/Python/Python.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 150.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/eduardo/GitHub/cov19"
+	],
+	"file_history":
+	[
+		"/home/eduardo/Documentos/Python/cov19/cov19/cov19/__init__.py",
+		"/home/eduardo/Documentos/Python/cov19/cov19/cov19/__main__.py",
+		"/home/eduardo/GitHub/cov19/README.md",
+		"/home/eduardo/GitHub/cov19/docs/INSTRUCTIONS",
+		"/home/eduardo/Documentos/Python/cov19/testing/brazil.ini",
+		"/home/eduardo/GitHub/cov19/.gitignore",
+		"/home/eduardo/GitHub/cov19/cov19/__main__.py",
+		"/home/eduardo/Documentos/MeuModao",
+		"/home/eduardo/GitHub/cov19/Makefile",
+		"/home/eduardo/GitHub/cov19/DESCRIPTION.rst",
+		"/home/eduardo/GitHub/cov19/requirements.txt",
+		"/home/eduardo/GitHub/cov19/docs/README.md",
+		"/home/eduardo/GitHub/cov19/setup.py",
+		"/home/eduardo/GitHub/cov19/cov19/stat.py",
+		"/home/eduardo/GitHub/cov19/cov19/region.py",
+		"/home/eduardo/GitHub/cov19/cov19/models.py",
+		"/home/eduardo/GitHub/cov19/cov19/__init__.py",
+		"/home/eduardo/GitHub/cov19/cov19/functions.py",
+		"/home/eduardo/GitHub/cov19/cov19/dataset.py",
+		"/home/eduardo/GitHub/cov19/cov19/country.py",
+		"/home/eduardo/Documentos/Python/cov19/LICENSE",
+		"/home/eduardo/GitHub/covid-msird/run",
+		"/home/eduardo/GitHub/covid-msird/cov19/stat.py",
+		"/home/eduardo/GitHub/covid-msird/cov19/region.py",
+		"/home/eduardo/GitHub/covid-msird/cov19/models.py",
+		"/home/eduardo/GitHub/covid-msird/cov19/__main__.py",
+		"/home/eduardo/GitHub/covid-msird/cov19/__init__.py",
+		"/home/eduardo/GitHub/covid-msird/cov19/functions.py",
+		"/home/eduardo/GitHub/covid-msird/cov19/dataset.py",
+		"/home/eduardo/GitHub/covid-msird/cov19/country.py",
+		"/home/eduardo/GitHub/covid-msird/.gitignore",
+		"/home/eduardo/GitHub/covid-msird/parameters/russia.ini",
+		"/home/eduardo/GitHub/covid-msird/README.md",
+		"/home/eduardo/GitHub/covid-msird/parameters/brazil.ini",
+		"/home/eduardo/Documentos/Python/Covid/teste.py",
+		"/home/eduardo/GitHub/regress/main.py",
+		"/media/eduardo/Eduardo-Files/Workspace/GerarCondicoesIniciais/RUN.sh",
+		"/home/eduardo/GitHub/covid-msird/parameters/india.ini",
+		"/home/eduardo/GitHub/covid-msird/covid/functions.py",
+		"/home/eduardo/GitHub/covid-msird/covid/__main__.py",
+		"/home/eduardo/GitHub/covid-msird/covid/stat.py",
+		"/home/eduardo/GitHub/covid-msird/covid/dataset.py",
+		"/home/eduardo/GitHub/covid-msird/covid/country.py",
+		"/home/eduardo/GitHub/covid-msird/covid/models.py",
+		"/home/eduardo/GitHub/covid-msird/Makefile",
+		"/home/eduardo/GitHub/covid-msird/parameters/italy.ini",
+		"/home/eduardo/GitHub/covid-msird/parameters/gmsird.ini",
+		"/home/eduardo/GitHub/covid-msird/parameters/brazil-deaths.ini",
+		"/home/eduardo/GitHub/covid-msird/parameters/params.ini",
+		"/home/eduardo/GitHub/covid-msird/parameters/spain.ini",
+		"/home/eduardo/GitHub/covid-msird/parameters/update.ini",
+		"/home/eduardo/GitHub/covid-msird/update.ini",
+		"/home/eduardo/GitHub/covid-msird/run.sh",
+		"/media/eduardo/Eduardo-Files/Workspace/GerarCondicoesIniciais/benchmark.ini",
+		"/home/eduardo/GitHub/covid-msird/main.py",
+		"/home/eduardo/GitHub/covid-msird/covid.sh",
+		"/home/eduardo/GitHub/covid-msird/results/italy/mcmc_sample_5par.csv",
+		"/home/eduardo/GitHub/covid-msird/covid/region.py",
+		"/home/eduardo/GitHub/covid-msird/test.py",
+		"/home/eduardo/GitHub/covid-msird/gmsird.ini",
+		"/home/eduardo/GitHub/covid-msird/results/gmsird/mcmc_sample_6par.csv",
+		"/home/eduardo/GitHub/Machine Learning Cases/README.md",
+		"/home/eduardo/GitHub/covid-msird/covid/__init__.py",
+		"/home/eduardo/GitHub/covid-msird/results/gmsird/mcmc_sample_6par (cópia).csv",
+		"/home/eduardo/GitHub/covid-msird/results/gmsird/mcmc_sample_5par (cópia).csv",
+		"/home/eduardo/GitHub/covid-msird/results/italy/single-parameter-estimates.csv",
+		"/home/eduardo/GitHub/covid-msird/italy.ini",
+		"/home/eduardo/GitHub/covid-msird/brazil.ini",
+		"/home/eduardo/GitHub/covid-msird/india.ini",
+		"/home/eduardo/GitHub/covid-msird/results/india/single-parameter-estimates.csv",
+		"/home/eduardo/GitHub/covid-msird/results/italy/epidemiological_par.csv",
+		"/home/eduardo/GitHub/covid-msird/results/india/epidemiological_par.csv",
+		"/home/eduardo/GitHub/covid-msird/covid/_tables/epidemiological_par.csv",
+		"/home/eduardo/GitHub/covid-msird/params.ini",
+		"/home/eduardo/GitHub/regress/regress/multipoly.py",
+		"/home/eduardo/GitHub/regress/regress/tools.py",
+		"/home/eduardo/GitHub/regress/regress/trash.py",
+		"/home/eduardo/Dropbox/DataScience/Udemy/Aprenda Machine Learning em Python com Scikit-learn/Sec4 - NumberRecognition/boston.txt",
+		"/home/eduardo/GitHub/Pocos-de-Caldas-COVID-19-Data/data/PC_boletins_data.csv",
+		"/home/eduardo/GitHub/Pocos-de-Caldas-COVID-19-Data/README.md",
+		"/home/eduardo/Dropbox/DataScience/Udemy/Aprenda Machine Learning em Python com Scikit-learn/Sec3 - Advertising Dataset/data/Advertising.csv",
+		"/home/eduardo/Dropbox/DataScience/Python_Data_Science_with_Pandas: Master_12_Advanced_Projects/pandas_tips",
+		"/home/eduardo/Documentos/Python/MufCosm/requirements.txt",
+		"/home/eduardo/Dropbox/DataScience/Python_Data_Science_with_Pandas: Master_12_Advanced_Projects/Project_01_Movies/movies_complete.csv",
+		"/home/eduardo/Documentos/git branch novaBranch",
+		"/home/eduardo/GitHub/covid-msird/setup.cfg",
+		"/home/eduardo/GitHub/covid-msird/requirements.txt",
+		"/home/eduardo/GitHub/covid-msird/Arquivo_para_apagar",
+		"/home/eduardo/GitHub/PrimeiroRepo/README.md",
+		"/home/eduardo/Dropbox/DataScience/1 - Linguagens de Programacao/Aula Listas.ipynb",
+		"/home/eduardo/GitHub/PrimeiroRepo/novos-perso",
+		"/home/eduardo/GitHub/PrimeiroRepo/NovoDocumento",
+		"/home/eduardo/GitHub/PrimeiroRepo/personagens",
+		"/home/eduardo/GitHub/PrimeiroRepo/planetas",
+		"/home/eduardo/Área de Trabalho/mcmc/mcmc.dat",
+		"/home/eduardo/GitHub/personagens",
+		"/home/eduardo/GitHub/PrimeiroRepo/PrimeiroArquivo",
+		"/home/eduardo/Documentos/Python/Radar/_tables/28 dias.csv",
+		"/home/eduardo/Downloads/COVID-19-master/README.md",
+		"/home/eduardo/Documentos/Python/Radar/_tables/7 dias.csv",
+		"/home/eduardo/Documentos/Python/Radar/_tables/91 dias.csv",
+		"/home/eduardo/Documentos/Python/Covid/_tables/mcmc_sample_5par.csv",
+		"/home/eduardo/Área de Trabalho/anaconda.desktop",
+		"/home/eduardo/Dropbox/DataScience/1 - Linguagens de Programacao/Aula Conjuntos.ipynb",
+		"/home/eduardo/Documentos/Python/Covid/_tables/mcmc_sample.csv",
+		"/home/eduardo/Documentos/Python/Radar/csvs/3 dias.csv",
+		"/home/eduardo/Documentos/Python/COVID-19-master/notebooks/Dados_Ceara.ipynb",
+		"/home/eduardo/Documentos/Python/Covid/_tables/demofile2.txt",
+		"/home/eduardo/Área de Trabalho/Covid19/Simulation/Bing-COVID19-Data.csv",
+		"/home/eduardo/Dropbox/Doutorado/Pesquisa/Lyra-Manifold/_escritos/0-Scalar-Tensor Gravity on Lyra Manifold/referencias.bib",
+		"/home/eduardo/Área de Trabalho/alteracoes-prof-pimentel",
+		"/home/eduardo/Área de Trabalho/Covid19/Bing-COVID19-Data.csv",
+		"/home/eduardo/Área de Trabalho/Scrips_visualizando_dados_coronavirus_python (1)/covid_19_clean_complete.csv",
+		"/tmp/kite_tutorial.py",
+		"/home/eduardo/Área de Trabalho/template-latex/main.tex",
+		"/home/eduardo/Área de Trabalho/template/references.bib",
+		"/home/eduardo/Área de Trabalho/template/settings.tex",
+		"/home/eduardo/Dropbox/Doutorado/Pesquisa/Lyra-Manifold/_escritos/Tese/_tools/specifications",
+		"/home/eduardo/Dropbox/Doutorado/Pesquisa/Lyra-Manifold/_escritos/Tese/configuracoes.tex",
+		"/home/eduardo/Área de Trabalho/Covid19/Simulation/mcmc.dat",
+		"/home/eduardo/Área de Trabalho/Bing-COVID-19-Data-master/data/2020-4-21.csv",
+		"/home/eduardo/Área de Trabalho/arquivo_geral.csv",
+		"/home/eduardo/Dropbox/Doutorado/Pesquisa/Lyra-Manifold/_escritos/1-Vacuum Sphericaly Symmetric Solutions of Scalar-Tensor Gravity on Lyra Manifold/referencias.bib",
+		"/home/eduardo/Área de Trabalho/Covid19/new-cases-brazil.csv",
+		"/home/eduardo/Área de Trabalho/corona-virus-brazil (1)/brazil_covid19.csv",
+		"/home/eduardo/Área de Trabalho/Covid19/new_cases.csv",
+		"/home/eduardo/Área de Trabalho/coronabr-master/dados/corona_brasil.csv",
+		"/home/eduardo/Área de Trabalho/Covid19/corona_brasil.csv"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"covid",
+			"india",
+			"brazil",
+			"ep_file_name",
+			"df_Country",
+			"countries",
+			"country",
+			"covid/_results",
+			"brazil",
+			"india",
+			"ep_crv_prj_file",
+			"ep_crd_out_file",
+			"????????",
+			"gtc_plot",
+			"root_directory",
+			"set_di",
+			"tables",
+			"y_errors",
+			"insinstance",
+			"\n    ",
+			"    ",
+			",",
+			"\\ ",
+			"Lyra",
+			"--",
+			"\t"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\n\t",
+			"\t",
+			"\\"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 127.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "cov19.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

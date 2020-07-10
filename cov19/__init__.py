@@ -18,8 +18,3 @@ from .models import *
 
 # neglecting warnings
 warnings.filterwarnings('ignore')
-
-# setting directory structure
-root_directory,tables_directory = set_dir_struct();     
-
-set_directory(root_directory)
