@@ -23,7 +23,7 @@ pip install tqdm
 ```
 #### Installation
 
-You can install the package voa PyPI:
+You can install the package via PyPI:
 ```
 pip install cov19
 ```
