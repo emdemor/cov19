@@ -6,4 +6,6 @@ dist
 build
 cov19.egg-info
 DESCRIPTION.rst
+cov19.sublime-workspace
+pip-update
 docs/INSTRUCTIONS
