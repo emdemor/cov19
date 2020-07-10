@@ -312,7 +312,7 @@ class stat_model:
         """
 
         print('[info]: Generating a mcmc sample by metropolis-hastings algorithm.')
-        time.sleep(1)
+        time.sleep(0.5)
 
         # distributing the points to walkers
         n_walkers_list = distribute_among_walkers(n_points,n_walkers)
@@ -582,6 +582,7 @@ class stat_model:
         """
 
         print('[info]: Generating confidence regions for epidemiological curves.')
+        time.sleep(0.5)
 
         # checking if user want all sample or just a part
         if (type(sample) == int) and (0 < sample < len(self.sample)):
@@ -672,6 +673,7 @@ class stat_model:
         """
 
         print('[info]: Plotting curves.')
+        time.sleep(0.5)
         plt.close()
 
         # Solving Equations

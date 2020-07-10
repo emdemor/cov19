@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     readme = fh.read()
 
 setup(name='cov19',
-    version='0.0.8',
+    version='0.0.9',
     url='https://github.com/emdemor/cov19',
     license='MIT License',
     author='Eduardo M. de Morais',

@@ -6,6 +6,7 @@ dist
 build
 cov19.egg-info
 DESCRIPTION.rst
+cov19.sublime-project
 cov19.sublime-workspace
 update
 docs/INSTRUCTIONS
