@@ -24,6 +24,7 @@ import random,pygtc
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import time
 
 from tqdm       import tqdm
 from .functions import distribute_among_walkers, riffle
@@ -102,6 +103,7 @@ class stat_model:
         self.ep_model = ep_model
         self.par_est = par_est
         self.rescale = rescaling_by
+        self.sample = []
         self.n = 0
 
         if tend == False:
@@ -311,6 +313,7 @@ class stat_model:
         """
 
         print('[info]: Generating a mcmc sample by metropolis-hastings algorithm.')
+        time.sleep(1)
 
         # distributing the points to walkers
         n_walkers_list = distribute_among_walkers(n_points,n_walkers)
@@ -551,7 +554,8 @@ class stat_model:
 
         if show: plt.show()
         plt.close()
-        #return GTC
+        
+        return GTC
 
 
 
