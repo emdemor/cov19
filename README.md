@@ -14,7 +14,7 @@ The purpose of the cov19 package is to integrate the differential equations of e
 ## 1. Getting Started
 #### Dependencies
 You need Python 3.7 or later to use **cov19**. You can find it at [python.org](https://www.python.org/).
-You also need setuptools, wheel and twine packages, which is available from [PyPI](https://pypi.org). If you have pip, just run:
+You also need setuptools, pandas, pygtc and tqdm packages, which is available from [PyPI](https://pypi.org). If you have pip, just run:
 ```
 pip install pandas
 pip install pygtc
@@ -22,7 +22,12 @@ pip install setuptools
 pip install tqdm
 ```
 #### Installation
-Clone this repo to your local machine using:
+
+You can install the package voa PyPI:
+```
+pip install cov19
+```
+Alternatively, you can clone this repo to your local machine using:
 ```
 git clone https://github.com/emdemor/cov19
 ```
