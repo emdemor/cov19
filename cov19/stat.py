@@ -103,7 +103,6 @@ class stat_model:
         self.ep_model = ep_model
         self.par_est = par_est
         self.rescale = rescaling_by
-        self.sample = []
         self.n = 0
 
         if tend == False:
