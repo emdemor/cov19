@@ -1,6 +1,5 @@
 
-# Python Solver for Modified SIRD Model Differential Equations
-
+# Prediction for the spread of COVID-19 using Epidemiological Models
 
 ### Table of Contents
 1. [Getting Started](#1-getting-started)
@@ -17,13 +16,13 @@ You need Python 3.7 or later to use **pacotepypi**. You can find it at [python.o
 You also need setuptools, wheel and twine packages, which is available from [PyPI](https://pypi.org). If you have pip, just run:
 ```
 pip install setuptools
-pip install wheel
-pip install twine
+pip install tqdm
+pip install pygtc
 ```
 #### Installation
 Clone this repo to your local machine using:
 ```
-git clone https://github.com/caiocarneloz/pacotepypi.git
+git clone https://github.com/emdemor/modelling-sars-covid19
 ```
 ## 2. Features
 - File structure for PyPI packages
