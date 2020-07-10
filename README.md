@@ -1,7 +1,36 @@
 
 # Python Solver for Modified SIRD Model Differential Equations
 
-## Introduction
+
+### Table of Contents
+1. [Getting Started](#1-getting-started)
+2. [Features](#2-features)
+3. [Installation](#3-installation)
+4. [Model](#4-model)
+5. [Dataset](#5-dataset)
+
+
+
+## 1. Getting Started
+#### Dependencies
+You need Python 3.7 or later to use **pacotepypi**. You can find it at [python.org](https://www.python.org/).
+You also need setuptools, wheel and twine packages, which is available from [PyPI](https://pypi.org). If you have pip, just run:
+```
+pip install setuptools
+pip install wheel
+pip install twine
+```
+#### Installation
+Clone this repo to your local machine using:
+```
+git clone https://github.com/caiocarneloz/pacotepypi.git
+```
+## 2. Features
+- File structure for PyPI packages
+- Setup with package informations
+- License example
+
+## 3. Model
 
 Many research teams seek to find an epidemiological model that can describe the spread of SARS-CoV-2. Many gaps in knowledge about the biology of the virus, the difference in social patterns and public policies by countries around the world combined with the many testing approaches causes that the breadth and shape of infection curves do not assume a global behavioral pattern.
 
@@ -16,30 +45,9 @@ In this work, a toy model is presented to describe Covid infection data in Brazi
 
 This equations must be integrated with inicial conditions given by: s(0)=s_0 , I(0)=1 and R(0)=D(0)=0. The time variable t is defined as the time after first confirmed case. The model have five free parameters (\alpha,\beta,\rho,\delta,s_0), where s_0 is the initial susceptible individuals. Inthe case where \alpha=1, the SIRD model is recovered. As s_0, in general, assumes very large values, lets consider its log value. In this way, the parameters are $(\alpha,\beta,\rho,\delta,\log_{10}s_0).
 
-### Table of Contents
-1. [Results](#1-results)
-2. [Dataset](#2-dataset)
 
-## Getting Started
-#### Dependencies
-You need Python 3.7 or later to use **pacotepypi**. You can find it at [python.org](https://www.python.org/).
-You also need setuptools, wheel and twine packages, which is available from [PyPI](https://pypi.org). If you have pip, just run:
-```
-pip install setuptools
-pip install wheel
-pip install twine
-```
-#### Installation
-Clone this repo to your local machine using:
-```
-git clone https://github.com/caiocarneloz/pacotepypi.git
-```
-## Features
-- File structure for PyPI packages
-- Setup with package informations
-- License example
 
-## 1. Results
+## 4. Results
 
 The main result in this version is to plot de curves from the model for a specific parameter vector and compare this with dataset. In covid/stat.py, functions has been implemented to generate an MCMC sample, through which it will be possible to make inferences of the parametric intervals.
 
@@ -54,7 +62,7 @@ The main result in this version is to plot de curves from the model for a specif
 </p>
 
 
-### 2. Dataset
+### 5. Dataset
 
 Here, we are using the Microsoft Data, from the repo https://github.com/microsoft/Bing-COVID-19-Data. 
 ]
