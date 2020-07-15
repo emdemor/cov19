@@ -13,7 +13,7 @@ cd results
 
 if [ -e $arq ]
 then
-echo ""
+echo "......"
 else
 echo "Creting directory results/$file."
 mkdir -p $file

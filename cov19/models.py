@@ -23,6 +23,122 @@ import numpy as np
 from scipy.integrate import odeint
 
 
+class gen_verhulst:
+    '''
+    Description
+    ----------
+    '''
+    
+    def __init__(self,par,x0,tend,tbeg=0,npoints=100):
+        
+        self.par = par
+        self.x0 = x0
+        self.tbeg = tbeg
+        self.tend = tend
+        self.npoints = npoints
+        self.name = "MSIRD"
+        self.solve()
+
+    def diff_eq(self,x,t,par):
+        
+        """
+        Function resturning the differential equations of the model
+        
+        """
+        # setting the functions
+        s,i,r,d = x
+        a,b,r,d,logS0 = par
+
+        S0 = 10**logS0
+    
+        # mathematical equations
+        DiffS = - par[1]*(s/S0)*(i**a)
+        DiffI = par[1]*(s/S0)*(i**a) -(r+d)*i
+        DiffR = r*i
+        DiffD = d*i
+        
+        return [DiffS,DiffI,DiffR,DiffD]
+    
+
+    def solve(self,notifications = False):
+        """
+        This method imports the file where the sample was saved
+        """
+        if notifications:
+            print('[info]: Solving differential equations for '+self.name+' model. ')
+        
+        # getting the time values
+        self.days_list = np.linspace(self.tbeg,self.tend,self.npoints)
+
+        # calling the odeint method to solve the diff. equations
+        self.x = odeint(self.diff_eq,self.x0,self.days_list,args = (self.par,))
+        
+        #setting the variables
+        self.confirmed_list = self.x[:,1] + self.x[:,2] + self.x[:,3]
+        self.recovered_list = self.x[:,2]
+        self.death_list = self.x[:,3]
+
+
+class malthus:
+    '''
+    Description
+    ----------
+    '''
+    
+    def __init__(self,par,x0,tend,tbeg=0,npoints=100):
+        
+        self.par = par
+        self.x0 = x0
+        self.tbeg = tbeg
+        self.tend = tend
+        self.npoints = npoints
+        self.name = "Malthus"
+        self.solve()
+
+    def diff_eq(self,x,t,par):
+        
+        """
+        Function resturning the differential equations of the model
+        
+        """
+        # setting the functions
+        s,i,r,d = x
+        b,r,d,logS0 = par
+
+        S0 = 10**logS0
+    
+        # mathematical equations
+        DiffS = 0
+        DiffI = par[1]*(s/S0)*i
+        DiffR = r*i
+        DiffD = d*i
+        
+        return [DiffS,DiffI,DiffR,DiffD]
+    
+
+    def solve(self,notifications = False):
+        """
+        This method imports the file where the sample was saved
+        """
+        if notifications:
+            print('[info]: Solving differential equations for '+self.name+' model. ')
+        
+        # getting the time values
+        self.days_list = np.linspace(self.tbeg,self.tend,self.npoints)
+
+        # calling the odeint method to solve the diff. equations
+        self.x = odeint(self.diff_eq,self.x0,self.days_list,args = (self.par,))
+        
+        #setting the variables
+        self.confirmed_list = self.x[:,1] + self.x[:,2] + self.x[:,3]
+        self.recovered_list = self.x[:,2]
+        self.death_list = self.x[:,3]
+    
+            
+
+
+
+
 class mod_sird:
     '''
     Description
@@ -205,6 +321,9 @@ class mod_sird:
     
             
 
+
+
+
 class gmsird:
     '''
     Description
@@ -378,6 +497,11 @@ class gmsird:
         self.recovered_list = self.x[:,2]
         self.death_list = self.x[:,3]
     
+
+
+
+
+
 
 class gen_sird:
     '''

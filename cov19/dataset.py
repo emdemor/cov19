@@ -58,7 +58,8 @@ __DATASET_FILENAME__ = 'Bing-COVID19-Data.csv'
 
 def read_dataset(update_data = False,
                  url         = __DATASET_URL__,
-                 local_dataset_filename = __DATASET_FILENAME__):
+                 local_dataset_filename = __DATASET_FILENAME__,
+                 dataset_struct = "microsoft-bing"):
     '''
     Description
     ----------
@@ -87,32 +88,33 @@ def read_dataset(update_data = False,
         
     '''
 
-    # join filename with directory
-    #filename = path.join(tables_directory, local_dataset_filename)
-    filename = local_dataset_filename
+    if dataset_struct == "microsoft-bing":
+	    # join filename with directory
+	    #filename = path.join(tables_directory, local_dataset_filename)
+	    filename = local_dataset_filename
 
-    # updating when required
-    if update_data:
-        update_local_base(url,filename)
-    
-    #importing dataset
-    df = import_from_localbase(filename)[0]
+	    # updating when required
+	    if update_data:
+	        update_local_base(url,filename)
+	    
+	    #importing dataset
+	    df = import_from_localbase(filename)[0]
 
-    # Filling NA values
-    df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']] = df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']].fillna('')
-    df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']] = df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']].fillna(0)
-    
-    # Type coversion
-    df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']] = df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']].astype(float)
-    df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']] = df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']].astype(str)
-    
-    # Replacing Countries names
-    df['Country_Region'] = df['Country_Region'].replace('China (mainland)','China')
-    
-    # Creating a new column
-    df['Actives'] = df['Confirmed']-df['Deaths']-df['Recovered']
+	    # Filling NA values
+	    df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']] = df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']].fillna('')
+	    df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']] = df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']].fillna(0)
+	    
+	    # Type coversion
+	    df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']] = df[['Confirmed','ConfirmedChange','Deaths','DeathsChange','Recovered','RecoveredChange']].astype(float)
+	    df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']] = df[['ISO2','ISO3','Country_Region','AdminRegion1','AdminRegion2']].astype(str)
+	    
+	    # Replacing Countries names
+	    df['Country_Region'] = df['Country_Region'].replace('China (mainland)','China')
+	    
+	    # Creating a new column
+	    df['Actives'] = df['Confirmed']-df['Deaths']-df['Recovered']
 
-    return df
+	    return df
 
 
 def import_from_url(url):

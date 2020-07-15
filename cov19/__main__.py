@@ -18,8 +18,8 @@ Informations
     Status: in development
 """
 
-from cov19 import read_dataset,country,mod_sird,gmsird,gen_sird
-from cov19.stat import *
+from cov19           import *
+from cov19.stat      import *
 from cov19.functions import *
 from numpy import random
 
@@ -82,6 +82,29 @@ def main(file_name):
 		                       )
 
 
+	# If user chooses 'malthus'
+	elif param['ep_model'] == 'malthus':
+
+		# defining statistical model
+		StatModel = stat_model(brasil_df,
+		                       malthus,
+		                       param['par_est'],
+		                       rescaling_by = 1/param['scl_factor'],
+		                       par_labels   = param['par_labels']
+		                       )
+
+	# If user chooses 'quasi_verhulst'
+	elif param['ep_model'] == 'quasi_verhulst':
+
+		# defining statistical model
+		StatModel = stat_model(brasil_df,
+		                       quasi_verhulst,
+		                       param['par_est'],
+		                       rescaling_by = 1/param['scl_factor'],
+		                       par_labels   = param['par_labels']
+		                       )
+
+
 	# generating a mcmc sample by metropolis-hastings algorithm
 	if param['generate_mcmc']:
 		StatModel.metropolis_hastings(n_points  = param['sample_length'],
@@ -101,6 +124,7 @@ def main(file_name):
 	if param['ep_par_prop']:
 			StatModel.evaluate_epidemiological_parameters(
 									overwrite = param['ep_par_overwrite'],
+                    				tend  = param['ep_t_end'],
 									file_name = param['ep_file_name'],
 									sample    = param['ep_par_sample']
 	                                )
@@ -113,6 +137,7 @@ def main(file_name):
 	# plotting curves
 	if param['ep_plot_curves']:
 		StatModel.plot_curves(SingleParameterEstimates['Medians'].to_list(),
+                    	tend  = param['ep_t_end'],
 	                    save_figure = True,
 	                    show        = False,
 	                    file_name = param['ep_crv_prj_file'],
