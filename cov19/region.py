@@ -74,6 +74,7 @@ class region:
         df,
         rescaling_by  = 1,
         last_index    = -1,
+        time_col      = 'Updated',
         confirmed_col = 'Confirmed',
         recovered_col = 'Recovered',
         deaths_col    = 'Deaths',
@@ -103,19 +104,19 @@ class region:
         df_Region = df.loc[(df[reg_column] == self.name) & (df['AdminRegion1'] == '')]
         
         # getting the first case
-        first_case = df_Region['Updated'].min()
+        first_case = df_Region[time_col].min()
         
-        # couting teh days after first case
-        df_Region['Days'] = (df_Region['Updated'] - first_case).dt.days.astype(float)
+        # couting the days after first case
+        df_Region['Days'] = (df_Region[time_col] - first_case).dt.days.astype(float)
         
         # rescaling cases by a factor
-        df_Region[['Confirmed','Actives','Deaths','Recovered']] = df_Region[['Confirmed','Actives','Deaths','Recovered']]*rescaling_by
+        df_Region[[confirmed_col,actives_col,deaths_col,recovered_col]] = df_Region[[confirmed_col,actives_col,deaths_col,recovered_col]]*rescaling_by
         self.dataframe = df_Region
         
         # converting columns to lists
         self.days_list = df_Region['Days'].to_numpy()
-        self.confirmed_list = df_Region['Confirmed'].to_numpy()
-        self.death_list = df_Region['Deaths'].to_numpy()
-        self.recovered_list = df_Region['Recovered'].to_numpy()
+        self.confirmed_list = df_Region[confirmed_col].to_numpy()
+        self.death_list = df_Region[deaths_col].to_numpy()
+        self.recovered_list = df_Region[recovered_col].to_numpy()
         
         
