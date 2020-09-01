@@ -1,6 +1,6 @@
 
 # Prediction for the spread of COVID-19 using Epidemiological Models
-The purpose of the cov19 package is to integrate the differential equations of epidemiological models and adjust their respective parameters with data using MCMC approach.
+The purpose of the cov19 package is to integrate the differential equations of epidemiological models and fit their respective parameters with data using MCMC approach.
 
 
 ### Table of Contents
